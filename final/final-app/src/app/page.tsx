@@ -1,10 +1,8 @@
 export default function Home() {
-  return (
-    <div>
-      <main>
-      </main>
-      <footer>
-      </footer>
-    </div>
-  );
+    return (
+        <div>
+            <main></main>
+            <footer></footer>
+        </div>
+    );
 }
