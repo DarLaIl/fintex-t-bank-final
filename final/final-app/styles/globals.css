@@ -1,0 +1,54 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    height: 100vh;
+}
+
+body {
+    height: 100%;
+    background: url('../public/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #0d4129;
+    font-size: 20px;
+}
+
+main {
+    padding: 10px 15px;
+}
+
+header {
+    height: 45px;
+    background-color: #d0e1ba;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+a {
+    color: #0d4129;
+    text-decoration: none;
+}
+
+button {
+    background-color: #0d4129;
+    padding: 5px;
+    border-radius: 10px;
+    color: #d0e1ba;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+@media (hover:hover) {
+    button:hover {
+        background-color: #16643f;
+        scale: 1.1;
+        color: #d0e1ba;
+    }
+}
