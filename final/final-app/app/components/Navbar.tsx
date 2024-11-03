@@ -9,7 +9,7 @@ const Navbar = () => {
     const router = useRouter();
 
     const buttonClickHandler = () => {
-        router.push('/register')
+        router.push('/login')
     }
     return (
         <nav className={styles.nav}>
@@ -22,7 +22,7 @@ const Navbar = () => {
                 />
                 <Link href="/">Planify</Link>
             </div>
-            <button type="button" onClick={buttonClickHandler}>
+            <button className={styles.btn} type="button" onClick={buttonClickHandler}>
                 Начать планировать
             </button>
         </nav>

@@ -1,5 +1,4 @@
 .wrapper {
-    box-sizing: border-box;
     display: flex;
     align-items: self-start;
     flex-direction: column;
@@ -21,4 +20,21 @@
 .wrapper ul {
     width: 50%;
     margin: 0;
+}
+
+.btn {
+    padding: 5px;
+    color: #d0e1ba;
+    cursor: pointer;
+    background-color: #0d4129;
+    border-radius: 10px;
+}
+
+@media (hover: hover) {
+    .btn:hover {
+        scale: 1.1;
+        background-color: #16643f;
+        color: #d0e1ba;
+        transition: all 0.5s ease;
+    }
 }

@@ -41,7 +41,11 @@ export default function Home() {
                 Погружайтесь в мир удобного и эффективного планирования с
                 Planify и следите за своим прогрессом каждый день!
             </p>
-            <button type="button" onClick={() => router.push('/register')}>
+            <button
+                className={styles.btn}
+                type="button"
+                onClick={() => router.push('/login')}
+            >
                 Начать планировать
             </button>
         </main>
