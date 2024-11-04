@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
@@ -11,6 +12,19 @@ from sqlalchemy.orm import sessionmaker, Session
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",  # ваш фронтенд на Next.js
+    # можно добавить другие домены, если нужно
+]
+
+# Добавляем CORS middleware с нужными настройками
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,           # указываем допустимые источники
+    allow_credentials=True,           # разрешить отправку cookies и авторизационных данных
+    allow_methods=["*"],              # разрешить все HTTP методы
+    allow_headers=["*"],              # разрешить все заголовки
+)
 # Конфигурация JWT
 SECRET_KEY = "your_secret_key"  # Используйте более длинный и защищённый ключ
 ALGORITHM = "HS256"

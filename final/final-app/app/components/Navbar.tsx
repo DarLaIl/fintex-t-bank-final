@@ -2,15 +2,20 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import styles from '../../styles/Navbar.module.css';
 
 const Navbar = () => {
     const router = useRouter();
+    const pathname = usePathname();
 
-    const buttonClickHandler = () => {
-        router.push('/login')
-    }
+    const startButtonClickHandler = () => {
+        router.push('/login');
+    };
+    const returnButtonClickHandler = () => {
+        router.push('/');
+    };
+
     return (
         <nav className={styles.nav}>
             <div className={styles.logo}>
@@ -18,13 +23,29 @@ const Navbar = () => {
                     src="/plant_icon.png"
                     width={40}
                     height={40}
+                    priority
+                    placeholder="empty"
                     alt="plant"
                 />
                 <Link href="/">Planify</Link>
             </div>
-            <button className={styles.btn} type="button" onClick={buttonClickHandler}>
-                Начать планировать
-            </button>
+            {pathname === '/' ? (
+                <button
+                    className={styles.btn}
+                    type="button"
+                    onClick={startButtonClickHandler}
+                >
+                    Начать планировать
+                </button>
+            ) : (
+                <button
+                    className={styles.btn}
+                    type="button"
+                    onClick={returnButtonClickHandler}
+                >
+                    Назад
+                </button>
+            )}
         </nav>
     );
 };
