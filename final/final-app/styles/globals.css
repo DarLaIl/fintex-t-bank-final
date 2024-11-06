@@ -11,7 +11,7 @@ html {
 body {
     box-sizing: border-box;
     height: 100%;
-    background: url('../public/wallpaper.jpg');
+    background-image: url('../public/wallpaper-1200.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -38,4 +38,22 @@ header {
 a {
     color: #0d4129;
     text-decoration: none;
+}
+
+@media only screen and (width < 300px) {
+    body {
+        background-image: url('../public/wallpaper-300.webp');
+    }
+}
+
+@media only screen and (width < 600px) {
+    body {
+        background-image: url('../public/wallpaper-600.webp');
+    }
+}
+
+@media only screen and (width > 1200px) and (resolution >= 2dppx) {
+    body {
+        background-image: url('../public/wallpaper-2400.webp');
+    }
 }

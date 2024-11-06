@@ -4,6 +4,7 @@
         "color-named": "never",
         "declaration-empty-line-before": "never",
         "no-duplicate-selectors": true,
+        "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
         "no-descending-specificity": true,
         "rule-empty-line-before": [
             "always",

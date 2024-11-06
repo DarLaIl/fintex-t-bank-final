@@ -10,20 +10,3 @@
     display: flex;
     align-items: flex-end;
 }
-
-.btn {
-    padding: 5px;
-    cursor: pointer;
-    background-color: #0d4129;
-    color: #d0e1ba;
-    border-radius: 10px;
-    transition: all 0.5s ease;
-}
-
-@media (hover: hover) {
-    .btn:hover {
-        scale: 1.1;
-        background-color: #16643f;
-        color: #d0e1ba;
-    }
-}

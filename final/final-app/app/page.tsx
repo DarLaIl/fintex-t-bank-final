@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { Button } from '../app/components/Button';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -8,15 +9,17 @@ export default function Home() {
 
     return (
         <main className={styles.wrapper}>
-            <h1>Добро пожаловать в Planify!</h1>
-            <p>
+            <h1 className={styles.wrapperTitle}>Добро пожаловать в Planify!</h1>
+            <p className={styles.wrapperText}>
                 <em>Planify</em> — ваш персональный органайзер для управления
                 задачами и планированием дел. Приложение предлагает интуитивный
                 интерфейс для создания и организации задач, а также поддерживает
                 функциональность календаря и возможности для совместной работы.
             </p>
-            <h4>Ключевые функции Planify:</h4>
-            <ul>
+            <h4 className={styles.wrapperFeaturesTitle}>
+                Ключевые функции Planify:
+            </h4>
+            <ul className={styles.wrapperFeaturesList}>
                 <li>
                     <strong>Множественные списки дел:</strong> создавайте
                     отдельные списки для рабочих задач, личных целей, проектов и
@@ -37,17 +40,13 @@ export default function Home() {
                     планирования и выполнения.
                 </li>
             </ul>
-            <p>
+            <p className={styles.wrapperText}>
                 Погружайтесь в мир удобного и эффективного планирования с
                 Planify и следите за своим прогрессом каждый день!
             </p>
-            <button
-                className={styles.btn}
-                type="button"
-                onClick={() => router.push('/login')}
-            >
+            <Button onClick={() => router.push('/login')}>
                 Начать планировать
-            </button>
+            </Button>
         </main>
     );
 }

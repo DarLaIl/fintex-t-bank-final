@@ -18,22 +18,16 @@ export default function SwitchBar() {
     return (
         <div className={styles.topbar}>
             <button
-                className={
-                    pathname === '/login'
-                        ? styles['switch-btn-active']
-                        : styles['switch-btn']
-                }
+                className={styles.switchBtn}
+                data-is-active={pathname === '/login'}
                 onClick={loginButtonClickHandler}
             >
                 Вход
             </button>
 
             <button
-                className={
-                    pathname === '/registration'
-                        ? styles['switch-btn-active']
-                        : styles['switch-btn']
-                }
+                className={styles.switchBtn}
+                data-is-active={pathname === '/registration'}
                 onClick={registrationButtonClickHandler}
             >
                 Регистрация

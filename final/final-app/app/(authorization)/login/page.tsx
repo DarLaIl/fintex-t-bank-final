@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/store';
 import { login } from '../../lib/api';
-import SwitchBar from '../../components/SwitchBar';
-import styles from '../../../styles/Authorization.module.css';
+import { AuthWrapper } from '../../components/AuthWrapper';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -29,33 +28,25 @@ export default function LoginForm() {
     };
 
     return (
-        <main>
-            <div className={styles.container}>
-                <SwitchBar />
-                {error && <p>{error}</p>}
-                <div className={styles['data-container']}>
-                    <input
-                        placeholder="Email"
-                        type="text"
-                        id="login"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        placeholder="Пароль"
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button
-                        className={styles['control-btn']}
-                        onClick={loginButtonClickHandler}
-                    >
-                        Войти
-                    </button>
-                </div>
-            </div>
-        </main>
+        <AuthWrapper
+            error={error}
+            onClick={loginButtonClickHandler}
+            submitButtonText={'Войти'}
+        >
+            <input
+                placeholder="Email"
+                type="text"
+                id="login"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+                placeholder="Пароль"
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+        </AuthWrapper>
     );
 }

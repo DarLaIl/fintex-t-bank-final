@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { Button } from '../components/Button';
 import styles from '../../styles/Navbar.module.css';
 
 const Navbar = () => {
@@ -20,7 +21,7 @@ const Navbar = () => {
         <nav className={styles.nav}>
             <div className={styles.logo}>
                 <Image
-                    src="/plant_icon.png"
+                    src="/plantIcon.png"
                     width={40}
                     height={40}
                     priority
@@ -30,21 +31,11 @@ const Navbar = () => {
                 <Link href="/">Planify</Link>
             </div>
             {pathname === '/' ? (
-                <button
-                    className={styles.btn}
-                    type="button"
-                    onClick={startButtonClickHandler}
-                >
+                <Button onClick={startButtonClickHandler}>
                     Начать планировать
-                </button>
+                </Button>
             ) : (
-                <button
-                    className={styles.btn}
-                    type="button"
-                    onClick={returnButtonClickHandler}
-                >
-                    Назад
-                </button>
+                <Button onClick={returnButtonClickHandler}>Назад</Button>
             )}
         </nav>
     );

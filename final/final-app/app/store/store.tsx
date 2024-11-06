@@ -1,6 +1,7 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import type { AnyAction } from 'redux';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
     token: string | null;

@@ -4,37 +4,20 @@
     flex-direction: column;
 }
 
-.wrapper h1 {
+.wrapperTitle {
     margin: 0;
 }
 
-.wrapper h4 {
-    margin: 10px;
-}
-
-.wrapper p {
+.wrapperText {
     width: 65%;
     text-shadow: 1px 1px 2px #fff;
 }
 
-.wrapper ul {
+.wrapperFeaturesTitle {
+    margin: 10px;
+}
+
+.wrapperFeaturesList {
     width: 50%;
     margin: 0;
-}
-
-.btn {
-    padding: 5px;
-    color: #d0e1ba;
-    cursor: pointer;
-    background-color: #0d4129;
-    border-radius: 10px;
-}
-
-@media (hover: hover) {
-    .btn:hover {
-        scale: 1.1;
-        background-color: #16643f;
-        color: #d0e1ba;
-        transition: all 0.5s ease;
-    }
 }
