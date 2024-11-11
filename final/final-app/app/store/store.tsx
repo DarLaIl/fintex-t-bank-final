@@ -5,14 +5,22 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
     token: string | null;
-    name: string | null;
-    email: string | null;
+    user: object | null;
+}
+
+interface ModalState {
+    isActive: boolean;
+    currentContent: string | null;
 }
 
 const initialAuthState: AuthState = {
     token: null,
-    name: null,
-    email: null,
+    user: null,
+};
+
+const initialModalState: ModalState = {
+    isActive: false,
+    currentContent: null,
 };
 
 const authSlice = createSlice({
@@ -22,11 +30,8 @@ const authSlice = createSlice({
         setToken(state, action: PayloadAction<string | null>) {
             state.token = action.payload;
         },
-        setUser(state, action: PayloadAction<string | null>) {
-            state.name = action.payload;
-        },
-        setEmail(state, action: PayloadAction<string | null>) {
-            state.name = action.payload;
+        setUser(state, action: PayloadAction<object | null>) {
+            state.user = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -39,12 +44,27 @@ const authSlice = createSlice({
     },
 });
 
-export const { setToken, setUser, setEmail } = authSlice.actions;
+const ModalSlice = createSlice({
+    name: 'modal',
+    initialState: initialModalState,
+    reducers: {
+        setModalActive(state, action: PayloadAction<boolean>) {
+            state.isActive = action.payload;
+        },
+        setCurrentContent(state, action: PayloadAction<string | null>) {
+            state.currentContent = action.payload;
+        },
+    },
+});
+
+export const { setToken, setUser } = authSlice.actions;
+export const { setModalActive, setCurrentContent } = ModalSlice.actions;
 
 export const makeStore = () =>
     configureStore({
         reducer: {
             auth: authSlice.reducer,
+            modal: ModalSlice.reducer,
         },
     });
 
