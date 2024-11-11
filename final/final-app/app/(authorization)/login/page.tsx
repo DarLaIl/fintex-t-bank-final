@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/store';
 import { login } from '../../lib/api';
-import { AuthWrapper } from '../../components/AuthWrapper';
+import { AuthWrapper } from '../../components/auth/AuthWrapper';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');

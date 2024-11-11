@@ -3,14 +3,15 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '../../lib/api';
-import { AuthWrapper } from '../../components/AuthWrapper';
+import { AuthWrapper } from '../../components/auth/AuthWrapper';
 
 export default function RegistrationForm() {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [lastname, setLastname] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    
     const router = useRouter();
 
     const registerButtonClickHandler = async () => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Button } from '../app/components/Button';
+import { Button } from './components/layout/Button';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {

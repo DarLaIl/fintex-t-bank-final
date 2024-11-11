@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import styles from '../../styles/Authorization.module.css';
+import styles from '../../../styles/Authorization.module.css';
 
 export default function SwitchBar() {
     const router = useRouter();

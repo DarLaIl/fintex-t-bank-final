@@ -1,7 +1,7 @@
 'use client';
 
 import SwitchBar from './SwitchBar';
-import styles from '../../styles/Authorization.module.css';
+import styles from '../../../styles/Authorization.module.css';
 
 type AuthWrapperProps = {
     error: string;
