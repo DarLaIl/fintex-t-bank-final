@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/store';
 import { login } from '../../lib/api';
-import { AuthWrapper } from '../../components/auth/AuthWrapper';
+import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -31,7 +31,7 @@ export default function LoginForm() {
         <AuthWrapper
             error={error}
             onClick={loginButtonClickHandler}
-            submitButtonText={'Войти'}
+            buttonText={'Войти'}
         >
             <input
                 placeholder="Email"

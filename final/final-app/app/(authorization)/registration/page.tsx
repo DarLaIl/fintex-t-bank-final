@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '../../lib/api';
-import { AuthWrapper } from '../../components/auth/AuthWrapper';
+import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
 
 export default function RegistrationForm() {
     const [name, setName] = useState<string>('');
@@ -11,7 +11,7 @@ export default function RegistrationForm() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-    
+
     const router = useRouter();
 
     const registerButtonClickHandler = async () => {
@@ -28,7 +28,7 @@ export default function RegistrationForm() {
         <AuthWrapper
             error={error}
             onClick={registerButtonClickHandler}
-            submitButtonText={'Зарегистрироваться'}
+            buttonText={'Зарегистрироваться'}
         >
             <input
                 placeholder="Имя"

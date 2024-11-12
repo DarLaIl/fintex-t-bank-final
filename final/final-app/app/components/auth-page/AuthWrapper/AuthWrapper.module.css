@@ -1,0 +1,29 @@
+.container {
+    position: absolute;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #ece9e9b5;
+}
+
+.dataContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
+.dataContainer input {
+    width: 250px;
+    padding: 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 15px;
+    outline-color: #317957;
+    outline-width: 1px;
+}

@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Button } from './components/layout/Button';
-import styles from '../styles/Home.module.css';
+import { LogoutButton } from './components/buttons/LogoutButton/LogoutButton';
+import styles from './styles/Home.module.css';
 
 export default function Home() {
     const router = useRouter();
@@ -44,9 +44,9 @@ export default function Home() {
                 Погружайтесь в мир удобного и эффективного планирования с
                 Planify и следите за своим прогрессом каждый день!
             </p>
-            <Button onClick={() => router.push('/login')}>
+            <LogoutButton onClick={() => router.push('/login')}>
                 Начать планировать
-            </Button>
+            </LogoutButton>
         </main>
     );
 }

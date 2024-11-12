@@ -1,10 +1,10 @@
 'use client';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setModalActive } from '../../store/store';
-import type { RootState } from '../../store/store';
+import { setModalActive } from '../../../../store/store';
+import { ChangeUserInfoModalContent } from '../ChangeUserInfoModalContent/ChangeUserInfoModalContent';
+import type { RootState } from '../../../../store/store';
 import styles from '../../../styles/Modal.module.css';
-import { ChangeUserInfoModalContent } from '../dashboard/ChangeUserInfoModalContent';
 
 export type ModalProps = {
     cookieValue: string | undefined;

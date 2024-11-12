@@ -1,8 +1,8 @@
-type TaskListProps = {
+type TaskListsProps = {
     lists: { id: number; name: string }[];
 };
 
-export const TasksListList: React.FC<TaskListProps> = ({ lists }) => {
+export const TasksLists: React.FC<TaskListsProps> = ({ lists }) => {
     return (
         <div>
             <h3>Мои списки дел:</h3>
@@ -14,10 +14,9 @@ export const TasksListList: React.FC<TaskListProps> = ({ lists }) => {
                         </li>
                     ))}
                 </ul>
-                ) : (
-                    <p>Здесь пока ничего нет</p>
-                )}
-            
+            ) : (
+                <p>Здесь пока ничего нет</p>
+            )}
         </div>
     );
 };

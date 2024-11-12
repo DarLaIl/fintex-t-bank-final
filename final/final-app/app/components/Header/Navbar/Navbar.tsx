@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Button } from './Button';
-import styles from '../../../styles/Navbar.module.css';
-import { logout } from '../../lib/api';
+import { logout } from '../../../lib/api';
 import { setToken } from '@/store/store';
+import { LogoutButton } from '../../buttons/LogoutButton/LogoutButton';
+import styles from './Navbar.module.css';
 
 const Navbar = () => {
     const router = useRouter();
@@ -42,19 +42,24 @@ const Navbar = () => {
                 <Link href="/">Planify</Link>
             </div>
             {pathname === '/' && (
-                <Button onClick={startButtonClickHandler}>
+                <LogoutButton onClick={startButtonClickHandler}>
                     Начать планировать
-                </Button>
+                </LogoutButton>
             )}
-            {pathname === '/login' ||
-                (pathname === '/registration' && (
-                    <Button onClick={returnButtonClickHandler}>Назад</Button>
-                ))}
+            {(pathname === '/login' || pathname === '/registration') && (
+                <LogoutButton onClick={returnButtonClickHandler}>
+                    Назад
+                </LogoutButton>
+            )}
             {!(
                 pathname === '/login' ||
                 pathname === '/registration' ||
                 pathname === '/'
-            ) && <Button onClick={logoutButtonClickHandler}>Выйти</Button>}
+            ) && (
+                <LogoutButton onClick={logoutButtonClickHandler}>
+                    Выйти
+                </LogoutButton>
+            )}
         </nav>
     );
 };

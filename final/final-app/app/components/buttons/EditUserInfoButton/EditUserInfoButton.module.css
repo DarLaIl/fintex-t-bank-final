@@ -1,0 +1,12 @@
+.editUserInfoButton {
+    border-radius: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+@media (hover: hover) {
+    .editUserInfoButton:hover {
+       background-color: #18301947; 
+    }
+}

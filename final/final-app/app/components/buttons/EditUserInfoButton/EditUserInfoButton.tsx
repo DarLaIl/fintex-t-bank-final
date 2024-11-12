@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { setCurrentContent, setModalActive } from '../../store/store';
-import styles from '../../../styles/Dashboard.module.css';
+import { setCurrentContent, setModalActive } from '../../../store/store';
+import styles from './EditUserInfoButton.module.css';
 
 export const EditUserInfoButton = () => {
     const dispatch = useDispatch();

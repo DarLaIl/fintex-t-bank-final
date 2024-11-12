@@ -1,5 +1,5 @@
-import styles from '../../../styles/Dashboard.module.css';
-import { EditUserInfoButton } from './EditUserInfoButton';
+import styles from './ProfileHeader.module.css';
+import { EditUserInfoButton } from '../../buttons/EditUserInfoButton/EditUserInfoButton';
 
 export const ProfileHeader = () => {
     return (

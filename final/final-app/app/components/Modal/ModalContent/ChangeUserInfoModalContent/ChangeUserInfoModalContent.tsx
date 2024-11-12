@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { ModalProps } from '../utils/Modal';
-import { setModalActive } from '../../store/store';
-import { updateUserProfile } from '../../lib/api';
-import styles from '../../../styles/Modal.module.css';
+import { setModalActive } from '../../../../store/store';
+import { updateUserProfile } from '../../../../lib/api';
+import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
+import type { ModalProps } from '../Modal/Modal';
+import styles from './ChangeUserInfoModalContent.module.css';
 
 export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
     cookieValue,
@@ -46,12 +47,9 @@ export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
             />
-            <button
-                className={styles.controlBtn}
-                onClick={updateUserButtonClickHandler}
-            >
+            <ControlButton onClick={updateUserButtonClickHandler}>
                 Сохранить
-            </button>
+            </ControlButton>
         </div>
     );
 };
