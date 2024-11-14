@@ -34,7 +34,7 @@ app.add_middleware(
 # Конфигурация JWT
 SECRET_KEY = "your_secret_key"  # Используйте более длинный и защищённый ключ
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 180
 
 # Настройка подключения к базе данных SQLite
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -350,7 +350,7 @@ async def upload_avatar(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
     # Сохранение файла
-    file_path = os.path.join("./avatars", f"{db_user.id}_{file.filename}")
+    file_path = os.path.join(f"{db_user.id}_{file.filename}")
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
