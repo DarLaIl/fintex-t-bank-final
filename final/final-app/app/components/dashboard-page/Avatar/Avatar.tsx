@@ -1,15 +1,44 @@
+'use client';
 import Image from 'next/image';
-import styles from '../../../styles/Dashboard.module.css';
+import { useEffect, useState } from 'react';
+import { getUserAvatar } from '../../../lib/api';
 
-export const Avatar = () => {
+export type AvatarProps = {
+    user: {
+        name: string;
+        lastname: string;
+        email: string;
+    };
+    cookieValue: string | undefined;
+};
+
+export const Avatar: React.FC<AvatarProps> = ({ user, cookieValue }) => {
+    const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+
+    useEffect(() => {
+        const loadAvatar = async () => {
+            try {
+                const avatar = await getUserAvatar(cookieValue);
+                if (avatar) {
+                    setAvatarSrc(avatar);
+                }
+            } catch (err) {
+                console.error('Fetching failed:', err);
+            }
+        };
+        loadAvatar();
+    }, [user, cookieValue]);
+
     return (
-        <div className={styles.avatar}>
-            <Image
-                src="/cactus-avatar.png"
-                width={100}
-                height={100}
-                alt="User avatar"
-            />
+        <div>
+            {avatarSrc && (
+                <Image
+                    src={avatarSrc}
+                    width={100}
+                    height={100}
+                    alt="User avatar"
+                />
+            )}
         </div>
     );
 };

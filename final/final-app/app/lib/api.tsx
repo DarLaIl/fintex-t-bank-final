@@ -66,3 +66,37 @@ export const updateUserProfile = async (
         throw new Error('Error updating profile');
     }
 };
+
+export const getUserAvatar = async (token: string | undefined) => {
+    let imageUrl;
+    try {
+        const response = await api.get('/users/me/avatar', {
+            headers: { Authorization: `Bearer ${token}` },
+            responseType: 'blob',
+        });
+
+        return (imageUrl = URL.createObjectURL(response.data));
+    } catch (error) {
+        console.warn('Error updating avatar:', error);
+        return (imageUrl = '/cactus-avatar.png');
+    }
+};
+
+export const uploadUserAvatar = async (
+    token: string | undefined,
+    formData: FormData
+) => {
+    try {
+        const response = await api.post('/users/me/avatar', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        throw new Error('Error updating profile');
+    }
+};

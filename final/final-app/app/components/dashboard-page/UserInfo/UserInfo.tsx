@@ -6,9 +6,7 @@ type UserInfoProps = {
     };
 };
 
-export const UserInfo: React.FC<UserInfoProps> = ({
-user
-}) => {
+export const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     return (
         <div>
             <p>Имя: {user.name}</p>
@@ -17,5 +15,3 @@ user
         </div>
     );
 };
-
-

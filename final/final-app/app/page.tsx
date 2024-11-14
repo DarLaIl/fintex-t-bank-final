@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { LogoutButton } from './components/buttons/LogoutButton/LogoutButton';
-import styles from './styles/Home.module.css';
+import styles from './Home.module.css';
 
 export default function Home() {
     const router = useRouter();

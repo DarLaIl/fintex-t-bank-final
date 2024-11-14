@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setModalActive } from '../../../../store/store';
 import { ChangeUserInfoModalContent } from '../ChangeUserInfoModalContent/ChangeUserInfoModalContent';
 import type { RootState } from '../../../../store/store';
-import styles from '../../../styles/Modal.module.css';
+import styles from './Modal.module.css';
 
 export type ModalProps = {
     cookieValue: string | undefined;
 };
 
-export const Modal: React.FC<ModalProps> = ({ cookieValue }: any) => {
+export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
     const dispatch = useDispatch();
     const modal = useSelector((state: RootState) => state.modal);
 

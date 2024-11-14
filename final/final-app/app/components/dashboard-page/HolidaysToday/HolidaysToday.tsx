@@ -12,9 +12,9 @@ export const HolidaysToday: React.FC<HolidaysTodayProps> = ({ holidays }) => {
                         <li key={index}>{holiday}</li>
                     ))}
                 </ul>
-                ) : (
-                    <p>Сегодня нет праздников</p>
-                )}
+            ) : (
+                <p>Сегодня нет праздников</p>
+            )}
         </div>
     );
 };
