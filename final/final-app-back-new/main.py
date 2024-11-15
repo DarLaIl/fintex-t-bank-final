@@ -24,7 +24,7 @@ origins = [
 # Настройка CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Разрешённые домены
+    allow_origins=["*"],  # Разрешённые домены
     allow_credentials=True,
     allow_methods=["*"],  # Разрешённые HTTP-методы
     allow_headers=["*"],  # Разрешённые HTTP-заголовки
@@ -375,7 +375,8 @@ async def get_avatar(
     
     db_user = get_user_by_email(db, email)
     if not db_user or not db_user.avatar:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Avatar not found")
+        default_avatar_path = os.path.join(os.getcwd(), "cactus-avatar.png")
+        return FileResponse(default_avatar_path)
     
     return FileResponse(db_user.avatar)
 
@@ -400,12 +401,12 @@ async def get_tasklists(db: Session = Depends(get_db), token: str = Depends(oaut
     return tasklists
 
 
-@app.put("/tasklists/{tasklist_id}", response_model=TaskListResponse)
+@app.put("/tasklists/{task_list_id}", response_model=TaskListResponse)
 async def update_tasklist(
-    tasklist_id: int, updates: TaskListUpdate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+    task_list_id: int, updates: TaskListUpdate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
 ):
     current_user_id = get_current_user_id(token, db)
-    tasklist = db.query(TaskList).filter(TaskList.id == tasklist_id, TaskList.user_id == current_user_id).first()
+    tasklist = db.query(TaskList).filter(TaskList.id == task_list_id, TaskList.user_id == current_user_id).first()
     if not tasklist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="TaskList not found")
     if updates.name:
@@ -417,13 +418,18 @@ async def update_tasklist(
     return tasklist
 
 
-@app.delete("/tasklists/{tasklist_id}", response_model=dict)
-async def delete_tasklist(tasklist_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+@app.options("/tasklists/{task_list_id}")
+async def options_tasklist():
+    return JSONResponse(status_code=200)
+
+
+@app.delete("/tasklists/{task_list_id}", response_model=dict)
+async def delete_tasklist(task_list_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     current_user_id = get_current_user_id(token, db)
-    tasklist = db.query(TaskList).filter(TaskList.id == tasklist_id, TaskList.user_id == current_user_id).first()
+    tasklist = db.query(TaskList).filter(TaskList.id == task_list_id, TaskList.user_id == current_user_id).first()
     if not tasklist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="TaskList not found")
-    db.query(Task).filter(Task.tasklist_id == tasklist_id).delete()
+    db.query(Task).filter(Task.task_list_id == task_list_id).delete()
     db.query(Comments).filter(Comments.task_id.in_([task.id for task in tasklist.tasks])).delete()
     db.delete(tasklist)
     db.commit()
