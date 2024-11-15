@@ -1,13 +1,14 @@
 'use client';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setModalActive } from '../../../../store/store';
-import { ChangeUserInfoModalContent } from '../ChangeUserInfoModalContent/ChangeUserInfoModalContent';
-import type { RootState } from '../../../../store/store';
+import { setModalActive } from '../../../store/store';
+import { ChangeUserInfoModalContent } from '../ModalContent/ChangeUserInfoModalContent/ChangeUserInfoModalContent';
+import { TaskListModalContent } from '../ModalContent/TaskListModalContent/TaskListModalContent';
+import type { RootState } from '../../../store/store';
 import styles from './Modal.module.css';
 
 export type ModalProps = {
-    cookieValue: string | undefined;
+    cookieValue?: string;
 };
 
 export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
@@ -18,7 +19,22 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
         switch (modal.currentContent) {
             case 'contentUpdateUser':
                 return <ChangeUserInfoModalContent cookieValue={cookieValue} />;
-
+            case 'contentAddNewTaskList':
+                return (
+                    <TaskListModalContent
+                        cookieValue={cookieValue}
+                        title={'Добавить новый список:'}
+                        update={false}
+                    />
+                );
+            case 'contentUpdateTaskList':
+                return (
+                    <TaskListModalContent
+                        cookieValue={cookieValue}
+                        title={'Изменить список:'}
+                        update
+                    />
+                );
             default:
                 return null;
         }

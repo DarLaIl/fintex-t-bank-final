@@ -11,6 +11,7 @@ interface AuthState {
 interface ModalState {
     isActive: boolean;
     currentContent: string | null;
+    currentTaskListId: number;
 }
 
 const initialAuthState: AuthState = {
@@ -21,6 +22,7 @@ const initialAuthState: AuthState = {
 const initialModalState: ModalState = {
     isActive: false,
     currentContent: null,
+    currentTaskListId: 0,
 };
 
 const authSlice = createSlice({
@@ -54,11 +56,15 @@ const ModalSlice = createSlice({
         setCurrentContent(state, action: PayloadAction<string | null>) {
             state.currentContent = action.payload;
         },
+        setCurrentTaskListId(state, action: PayloadAction<number>) {
+            state.currentTaskListId = action.payload;
+        },
     },
 });
 
 export const { setToken, setUser } = authSlice.actions;
-export const { setModalActive, setCurrentContent } = ModalSlice.actions;
+export const { setModalActive, setCurrentContent, setCurrentTaskListId } =
+    ModalSlice.actions;
 
 export const makeStore = () =>
     configureStore({

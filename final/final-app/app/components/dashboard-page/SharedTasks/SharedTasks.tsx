@@ -1,7 +1,7 @@
 type SharedTasksProps = {
     tasks: { task: string; date: string }[];
 };
-
+//раздел в разработке, будет позже
 export const SharedTasks: React.FC<SharedTasksProps> = ({ tasks }) => {
     return (
         <div>

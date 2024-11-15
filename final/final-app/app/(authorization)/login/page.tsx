@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
@@ -22,8 +23,12 @@ export default function LoginForm() {
                 router.push('/dashboard');
             }
         } catch (err) {
-            console.error('Login failed:', err);
-            setError('Login failed. Please check your credentials.');
+            if (axios.isAxiosError(err)) {
+                setError(err.response?.data?.detail);
+            } else {
+                setError('Неизвестная ошибка.');
+            }
+            console.error('Registration failed:', err);
         }
     };
 
@@ -31,7 +36,7 @@ export default function LoginForm() {
         <AuthWrapper
             error={error}
             onClick={loginButtonClickHandler}
-            buttonText={'Войти'}
+            buttonText="Войти"
         >
             <input
                 placeholder="Email"
