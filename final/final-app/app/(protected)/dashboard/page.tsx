@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getHolidays, getUserProfile, getUserTaskLists } from '../lib/api';
+import { getHolidays, getUserProfile, getUserTaskLists } from '../../lib/api';
 
-import { UserInfo } from '../components/dashboard-page/UserInfo/UserInfo';
-import { Avatar } from '../components/dashboard-page/Avatar/Avatar';
-import { ProfileHeader } from '../components/dashboard-page/ProfileHeader/ProfileHeader';
-import { TaskLists } from '../components/dashboard-page/TasksLists/TasksListList';
-import { SharedTasks } from '../components/dashboard-page/SharedTasks/SharedTasks';
-import { HolidaysToday } from '../components/dashboard-page/HolidaysToday/HolidaysToday';
-import { Modal } from '../components/Modal/Modal/Modal';
+import { UserInfo } from '../../components/dashboard-page/UserInfo/UserInfo';
+import { Avatar } from '../../components/dashboard-page/Avatar/Avatar';
+import { ProfileHeader } from '../../components/dashboard-page/ProfileHeader/ProfileHeader';
+import { TaskLists } from '../../components/dashboard-page/TasksLists/TasksLists';
+import { SharedTasks } from '../../components/dashboard-page/SharedTasks/SharedTasks';
+import { HolidaysToday } from '../../components/dashboard-page/HolidaysToday/HolidaysToday';
+import { Modal } from '../../components/Modal/Modal/Modal';
 import styles from './Dashboard.module.css';
 
 const Dashboard = async () => {

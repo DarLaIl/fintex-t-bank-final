@@ -47,7 +47,6 @@ export const getUserProfile = async (token: string) => {
         return response.data;
     } catch (error) {
         console.error('Error fetching profile:', error);
-        throw new Error('Error fetching profile');
     }
 };
 
@@ -112,7 +111,6 @@ export const getUserTaskLists = async (token: string) => {
         return response.data;
     } catch (error) {
         console.error('Error fetching Tasks Lists:', error);
-        throw new Error('Error fetching Tasks Lists');
     }
 };
 
@@ -188,9 +186,10 @@ export const getHolidays = async () => {
 
         const data = await response.json();
 
-        console.log(data);
         return data.response.holidays;
     } catch (error) {
         console.error('Fetch failed:', error);
     }
 };
+
+

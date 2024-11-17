@@ -89,7 +89,12 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
                                 >
                                     <FcFullTrash />
                                 </button>
-                                <button className={styles.details}>
+                                <button
+                                    className={styles.details}
+                                    onClick={() =>
+                                        router.push(`/tasklist/${list.id}`)
+                                    }
+                                >
                                     Подробнее
                                 </button>
                             </div>
