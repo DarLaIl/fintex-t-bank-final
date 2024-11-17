@@ -10,8 +10,10 @@ export default function RootLayout({
     return (
         <html lang="ru">
             <body>
-                <Header />
-                <ReduxProvider>{children}</ReduxProvider>
+                <ReduxProvider>
+                    <Header />
+                    {children}
+                </ReduxProvider>
             </body>
         </html>
     );

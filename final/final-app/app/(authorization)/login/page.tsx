@@ -1,19 +1,27 @@
 'use client';
 
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { setToken } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, setToken } from '../../store/store';
 import { login } from '../../lib/api';
 import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
 
-export default function LoginForm() {
+const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
     const dispatch = useDispatch();
+
+    const user = useSelector((state: RootState) => state.auth);
+
+    useEffect(() => {
+        if (user.token) {
+            router.push('/dashboard');
+        }
+    }, []);
 
     const loginButtonClickHandler = async () => {
         try {
@@ -54,4 +62,5 @@ export default function LoginForm() {
             />
         </AuthWrapper>
     );
-}
+};
+export default LoginForm;

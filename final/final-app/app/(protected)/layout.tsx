@@ -6,26 +6,27 @@ const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
     const cookieStore = await cookies();
     const token: string | undefined = cookieStore.get('jwt')?.value;
 
-    if (!token) {
-        redirect('/login');
-    }
+    if (token) {
+        try {
+            const decodedToken = jwtDecode<JwtPayload>(token);
+            const isExpired =
+                decodedToken.exp && decodedToken.exp * 1000 < Date.now();
 
-    try {
-        const decodedToken = jwtDecode<JwtPayload>(token);
-        const isExpired =
-            decodedToken.exp && decodedToken.exp * 1000 < Date.now();
-
-        if (isExpired) {
+            if (isExpired) {
+                clearAuthToken();
+                redirect('/login');
+            }
+            return <>{children}</>;
+            
+        } catch (err) {
+            console.error('Invalid token:', err);
             clearAuthToken();
             redirect('/login');
         }
-    } catch (err) {
-        console.error('Invalid token:', err);
-        clearAuthToken();
+
+    } else {
         redirect('/login');
     }
-
-    return <>{children}</>;
 };
 
 function clearAuthToken() {

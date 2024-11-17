@@ -5,13 +5,17 @@ import { usePathname, useRouter } from 'next/navigation';
 import { logout } from '../../../lib/api';
 import { LogoutButton } from '../../buttons/LogoutButton/LogoutButton';
 import styles from './Navbar.module.css';
+import { useDispatch } from 'react-redux';
+import { setToken } from '@/store/store';
 
 const Navbar = () => {
     const router = useRouter();
     const pathname = usePathname();
+    const dispatch = useDispatch();
+
 
     const startButtonClickHandler = () => {
-        router.push('/dashboard');
+        router.push('/login');
     };
     const returnButtonClickHandler = () => {
         router.push('/');
@@ -19,10 +23,11 @@ const Navbar = () => {
     const logoutButtonClickHandler = async () => {
         try {
             await logout();
+            router.push('/login');
+            dispatch(setToken(''));
         } catch (err) {
             console.error('Logout failed:', err);
         }
-        router.push('/login');
     };
 
     const shouldShowLogoutButton = !(
