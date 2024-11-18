@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'next/navigation';
-import { RootState, setIsAdded, setModalActive } from '../../../../store/store';
+import {
+    type RootState,
+    setIsAdded,
+    setModalActive,
+} from '../../../../store/store';
 import { createNewTask, getAllUser, updateTask } from '../../../../lib/api';
 import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
-import type { ModalProps } from '../../Modal/Modal';
+import type { User, TaskModalContentProps } from '../../../../types/types';
 import styles from '../ModalContent.module.css';
 
-type User = {
-    id: number;
-    email: string;
-    name: string;
-};
-
-type TaskModalContentProps = {
-    cookieValue: string | undefined;
-    update: boolean;
-};
 export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
     cookieValue,
     update,
@@ -67,7 +61,6 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
 
     const updateTaskButtonClickHandler = async () => {
         try {
-            console.log(assigned.map((userId) => Number(userId)));
             await updateTask(
                 cookieValue,
                 name,
@@ -152,7 +145,7 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
                     type="checkbox"
                     id="checkbox"
                     checked={notification}
-                    onChange={(e) => setNotification(!notification)}
+                    onChange={() => setNotification(!notification)}
                 />
             </label>
             {!update && (

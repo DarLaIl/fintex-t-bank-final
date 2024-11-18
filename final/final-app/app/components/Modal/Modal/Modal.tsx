@@ -5,15 +5,12 @@ import { setModalActive } from '../../../store/store';
 import { ChangeUserInfoModalContent } from '../ModalContent/ChangeUserInfoModalContent/ChangeUserInfoModalContent';
 import { TaskListModalContent } from '../ModalContent/TaskListModalContent/TaskListModalContent';
 import { CreateNewTaskModalContent } from '../ModalContent/CreateNewTaskModalContent/CreateNewTaskModalContent';
-import type { RootState } from '../../../store/store';
 import styles from './Modal.module.css';
 import { TaskDetailsModalContent } from '../ModalContent/TaskDetailsModalContent/TaskDetailsModalContent';
+import type { RootState } from '../../../store/store';
+import type { cookieProps } from '../../../types/types';
 
-export type ModalProps = {
-    cookieValue?: string;
-};
-
-export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
+export const Modal: React.FC<cookieProps> = ({ cookieValue }) => {
     const dispatch = useDispatch();
     const modal = useSelector((state: RootState) => state.modal);
     const events = useSelector((state: RootState) => state.events);
@@ -45,7 +42,6 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
                         update={false}
                     />
                 );
-
             case 'contentUpdateTask':
                 return (
                     <CreateNewTaskModalContent
@@ -53,7 +49,6 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
                         update
                     />
                 );
-
             case 'contentTaskDetails':
                 return (
                     <TaskDetailsModalContent
@@ -61,7 +56,6 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
                         cookieValue={cookieValue}
                     />
                 );
-
             default:
                 return null;
         }

@@ -1,9 +1,5 @@
 import styles from './ControlButton.module.css';
-
-type ControlButtonProps = {
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    children: string;
-};
+import type { ControlButtonProps } from '../../../types/types';
 
 export const ControlButton: React.FC<ControlButtonProps> = ({
     onClick,

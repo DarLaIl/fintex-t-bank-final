@@ -13,7 +13,6 @@ const Navbar = () => {
     const pathname = usePathname();
     const dispatch = useDispatch();
 
-
     const startButtonClickHandler = () => {
         router.push('/login');
     };

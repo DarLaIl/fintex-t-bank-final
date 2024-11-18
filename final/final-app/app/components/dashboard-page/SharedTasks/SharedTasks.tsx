@@ -6,23 +6,7 @@ import {
 } from '@/store/store';
 import { useDispatch } from 'react-redux';
 import styles from '../../../(protected)/tasklist/[taskList_id]/taskList.module.css';
-
-export type Task = {
-    id: number;
-    name: string;
-    end_date: string;
-    description: string;
-    assigned: number[];
-    author: number;
-    notification: boolean;
-    is_completed: boolean;
-    task_list_id: number;
-    task_list_name: string;
-};
-
-type SharedTasksProps = {
-    tasks: Task[];
-};
+import type { Task, SharedTasksProps } from '@/types/types';
 
 export const SharedTasks: React.FC<SharedTasksProps> = ({ tasks }) => {
     const dispatch = useDispatch();

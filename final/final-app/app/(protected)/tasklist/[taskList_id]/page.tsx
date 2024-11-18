@@ -8,37 +8,19 @@ import { getUsersTasks, getUserTaskLists } from '../../../lib/api';
 import {
     setModalCurrentContent,
     setModalActive,
-    RootState,
+    type RootState,
 } from '../../../store/store';
 import { Modal } from '../../../components/Modal/Modal/Modal';
 import { ControlButton } from '../../../components/buttons/ControlButton/ControlButton';
 import Calendar from '../../../components/taskList-page/Calendar/Calendar';
 import styles from './taskList.module.css';
+import type { TaskList, Task } from '../../../types/types';
 
-export type TaskList = {
-    id: number;
-    name: string;
-    type: string;
-};
-
-export type Task = {
-    id: number;
-    name: string;
-    end_date: string;
-    description: string;
-    assigned: number[];
-    author: number;
-    notification: boolean;
-    is_completed: boolean;
-    task_list_id: number;
-    task_list_name: string;
-};
-
-const TaskList = () => {
+const TaskListPage = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const params = useParams();
-    const taskList_id = params.taskList_id;
+    const taskList_id: string | string[] | undefined = params.taskList_id;
 
     const [currentTaskList, setCurrentTaskList] = useState<TaskList | null>(
         null
@@ -47,16 +29,18 @@ const TaskList = () => {
 
     const token: string | undefined = Cookies.get('jwt');
 
+    const isAdded = useSelector((state: RootState) => state.events.isAdded);
+
     useEffect(() => {
         const fetchTaskLists = async () => {
             try {
-                const taskLists = await getUserTaskLists(token);
-                const allTasks = await getUsersTasks(token);
+                const taskLists: TaskList[] = await getUserTaskLists(token);
+                const allTasks: Task[] = await getUsersTasks(token);
 
                 const currentTaskList = taskLists.find(
                     (taskList: TaskList) => taskList.id === Number(taskList_id)
                 );
-                setCurrentTaskList(currentTaskList);
+                setCurrentTaskList(currentTaskList || null);
 
                 const allCurrentTasks = allTasks.filter(
                     (task: Task) =>
@@ -68,7 +52,7 @@ const TaskList = () => {
             }
         };
         fetchTaskLists();
-    }, [taskList_id, useSelector((state: RootState) => state.events.isAdded)]);
+    }, [taskList_id, isAdded]);
 
     const addNewTaskButtonClickHandler = () => {
         dispatch(setModalCurrentContent('contentAddNewTask'));
@@ -95,4 +79,4 @@ const TaskList = () => {
     );
 };
 
-export default TaskList;
+export default TaskListPage;

@@ -242,7 +242,7 @@ export const createNewTask = async (
                 name: `${name}`,
                 end_date: `${end_date}`,
                 description: `${description}`,
-                assigned: assigned,
+                assigned,
                 notification: `${notification}`,
                 task_list_id: `${task_list_id}`,
             },
@@ -276,7 +276,7 @@ export const updateTask = async (
                 name: `${name}`,
                 end_date: `${end_date}`,
                 description: `${description}`,
-                assigned: assigned,
+                assigned,
                 notification: `${notification}`,
             },
             {

@@ -17,16 +17,12 @@ import {
 } from '../../../store/store';
 import { deleteTaskList } from '../../../lib/api';
 import styles from './TaskLists.module.css';
-
-export type TaskListsProps = {
-    lists: { id: number; name: string; type: string }[];
-    cookieValue?: string;
-};
+import type { TaskListsProps } from '../../../types/types';
 
 export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
     const dispatch = useDispatch();
     const router = useRouter();
-    
+
     const addNewListButtonClickHandler = () => {
         dispatch(setModalActive(true));
         dispatch(setModalCurrentContent('contentAddNewTaskList'));

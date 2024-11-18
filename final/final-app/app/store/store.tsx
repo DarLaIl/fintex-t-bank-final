@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import type { AnyAction } from 'redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Task } from '@/(protected)/tasklist/[taskList_id]/page';
+import type { Task } from '../types/types';
 
 interface AuthState {
     token: string | null;

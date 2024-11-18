@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { setModalActive } from '../../../../store/store';
 import { updateUserProfile, uploadUserAvatar } from '../../../../lib/api';
 import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
-import type { ModalProps } from '../../Modal/Modal';
 import styles from '../ModalContent.module.css';
+import type { СookieProps } from '../../../../types/types';
 
-export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
+export const ChangeUserInfoModalContent: React.FC<СookieProps> = ({
     cookieValue,
 }) => {
     const [name, setName] = useState<string>('');

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { RootState, setModalActive } from '../../../../store/store';
+import { type RootState, setModalActive } from '../../../../store/store';
 import { createNewTaskList, updateTaskList } from '../../../../lib/api';
 import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
 import styles from '../ModalContent.module.css';

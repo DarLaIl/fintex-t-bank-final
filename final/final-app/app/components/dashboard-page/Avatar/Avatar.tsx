@@ -2,15 +2,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getUserAvatar } from '../../../lib/api';
-
-export type AvatarProps = {
-    user: {
-        name: string;
-        lastname: string;
-        email: string;
-    };
-    cookieValue: string | undefined;
-};
+import type { AvatarProps } from '../../../types/types';
 
 export const Avatar: React.FC<AvatarProps> = ({ user, cookieValue }) => {
     const [avatarSrc, setAvatarSrc] = useState<string | null>(null);

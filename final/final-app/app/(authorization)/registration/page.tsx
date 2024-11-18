@@ -21,7 +21,7 @@ export default function RegistrationForm() {
     const registerButtonClickHandler = async () => {
         try {
             await register(email, password, name, lastname);
-            const token = await login(email, password);
+            const token: string | undefined = await login(email, password);
             if (token) {
                 dispatch(setToken(token));
                 router.push('/dashboard');

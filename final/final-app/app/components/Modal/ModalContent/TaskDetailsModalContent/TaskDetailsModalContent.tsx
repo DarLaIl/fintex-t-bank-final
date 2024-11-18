@@ -8,18 +8,8 @@ import {
 } from '../../../../store/store';
 import { deleteTask, getAllUser, getUserProfile } from '../../../../lib/api';
 import styles from '../ModalContent.module.css';
-import { Task } from '@/(protected)/tasklist/[taskList_id]/page';
+import type { User, Task, TaskProps } from '../../../../types/types';
 
-type TaskProps = {
-    cookieValue?: string;
-    task: Task | null;
-};
-
-type User = {
-    id: number;
-    email: string;
-    name: string;
-};
 export const TaskDetailsModalContent: React.FC<TaskProps> = ({
     cookieValue,
     task,

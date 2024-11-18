@@ -1,7 +1,11 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getAssignedTasks, getHolidays, getUserProfile, getUserTaskLists } from '../../lib/api';
-
+import {
+    getAssignedTasks,
+    getHolidays,
+    getUserProfile,
+    getUserTaskLists,
+} from '../../lib/api';
 import { UserInfo } from '../../components/dashboard-page/UserInfo/UserInfo';
 import { Avatar } from '../../components/dashboard-page/Avatar/Avatar';
 import { ProfileHeader } from '../../components/dashboard-page/ProfileHeader/ProfileHeader';
@@ -21,13 +25,13 @@ const Dashboard = async () => {
             const taskListsPromise = getUserTaskLists(token);
             const assignedPromise = getAssignedTasks(token);
             const holidaysPromise = getHolidays();
-            const [user, taskLists, holidaysToday, assignedTasks] = await Promise.all([
-                userPromise,
-                taskListsPromise,
-                holidaysPromise,
-                assignedPromise,
-            ]);
-            console.log(assignedTasks);
+            const [user, taskLists, holidaysToday, assignedTasks] =
+                await Promise.all([
+                    userPromise,
+                    taskListsPromise,
+                    holidaysPromise,
+                    assignedPromise,
+                ]);
 
             return (
                 <main className={styles.profilePage}>

@@ -1,12 +1,7 @@
-import type { MouseEventHandler } from 'react';
 import styles from './LogoutButton.module.css';
+import type { ControlButtonProps } from '../../../types/types';
 
-type LogoutButtonProps = {
-    onClick: MouseEventHandler<HTMLButtonElement>;
-    children: string;
-};
-
-export const LogoutButton: React.FC<LogoutButtonProps> = ({
+export const LogoutButton: React.FC<ControlButtonProps> = ({
     children,
     onClick,
 }) => {

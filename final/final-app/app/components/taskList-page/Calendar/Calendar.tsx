@@ -2,7 +2,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import styles from './Calendar.module.css';
-import type { Task } from '@/(protected)/tasklist/[taskList_id]/page';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -10,16 +9,7 @@ import {
     setModalActive,
     setModalCurrentContent,
 } from '@/store/store';
-
-type CalendarProps = {
-    usersTasks: Task[];
-};
-type Event = {
-    title: string;
-    start: string;
-    end?: string;
-    allDay?: boolean;
-};
+import type { Task, Event, CalendarProps } from '../../../types/types';
 
 export default function Calendar({ usersTasks }: CalendarProps) {
     const dispatch = useDispatch();
@@ -55,7 +45,7 @@ export default function Calendar({ usersTasks }: CalendarProps) {
         const task = usersTasks.find(
             (task) =>
                 task.name === event.title &&
-                task.end_date === event.end.toISOString().split('T')[0]
+                task.end_date === event?.end.toISOString().split('T')[0]
         );
 
         if (task) {

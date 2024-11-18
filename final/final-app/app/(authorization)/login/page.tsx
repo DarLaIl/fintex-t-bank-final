@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setToken } from '../../store/store';
+import { type RootState, setToken } from '../../store/store';
 import { login } from '../../lib/api';
 import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
 
@@ -25,7 +25,7 @@ const LoginForm = () => {
 
     const loginButtonClickHandler = async () => {
         try {
-            const token = await login(email, password);
+            const token: string | undefined = await login(email, password);
             if (token) {
                 dispatch(setToken(token));
                 router.push('/dashboard');

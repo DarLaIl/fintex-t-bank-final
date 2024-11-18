@@ -1,10 +1,10 @@
 .container {
-    background-color:#fff ;
+    background-color: #fff;
     margin-right: 100px;
     padding: 20px;
     border: 1px solid #1a7a32;
     border-radius: 20px;
-    color:#1a7a32 ;
+    color: #1a7a32;
 }
 
 .container ul {
