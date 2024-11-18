@@ -74,20 +74,16 @@ const TaskList = () => {
         dispatch(setModalActive(true));
     };
     return (
-        <>
-            <h2>Список: {currentTaskList?.name}</h2>
-            <div className={styles.taskListPage}>
-                <Calendar usersTasks={currentTasks} />
-                <div>
-                    <div>
-                        <ControlButton onClick={addNewTaskButtonClickHandler}>
-                            Добавить событие
-                        </ControlButton>
-                    </div>
-                </div>
-                <Modal cookieValue={token} />
+        <div className={styles.taskListPage}>
+            <div>
+                <h2>Список: {currentTaskList?.name}</h2>
+                <ControlButton onClick={addNewTaskButtonClickHandler}>
+                    Добавить событие
+                </ControlButton>
             </div>
-        </>
+            <Calendar usersTasks={currentTasks} />
+            <Modal cookieValue={token} />
+        </div>
     );
 };
 

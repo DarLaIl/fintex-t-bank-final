@@ -1,4 +1,44 @@
-.calendarContainer{
+.calendarContainer {
+    margin-top: 25px;
     width: 50vw;
     z-index: 0;
+
+    --fc-button-text-color: #0d4129;
+    --fc-button-bg-color: #d0e1ba;
+    --fc-button-active-bg-color: #01b05e;
+    --fc-button-hover-bg-color: #01b05e;
+    --fc-bg-event-opacity: 0.3;
+    --fc-highlight-color: #01b05e3c;
+    --fc-today-bg-color: #1bed8bb5;
+}
+
+.container {
+display: flex;
+gap: 30px;
+}
+
+.detailsContainer {
+  width: 350px;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.taskItem {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 5px;
+}
+
+.taskItem h4 {
+  margin: 0;
+}
+
+.taskItem p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
 }
