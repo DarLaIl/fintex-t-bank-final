@@ -124,6 +124,14 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     password: Optional[str] = None
 
+class UserResponse(BaseModel):
+    id: int
+    email: str
+    name: str
+
+    class Config:
+        from_attributes = True
+
 # TaskList схемы
 class TaskListCreate(BaseModel):
     name: str
@@ -151,7 +159,7 @@ class TaskCreate(BaseModel):
     description: Optional[str] = None
     assigned: Optional[List[int]] = []
     notification: Optional[bool] = False
-
+    task_list_id: Optional[int] = None
 
 class TaskResponse(BaseModel):
     id: int
@@ -161,11 +169,13 @@ class TaskResponse(BaseModel):
     assigned: List[int]
     author: int
     notification: bool
-    iscompleted: bool
+    is_completed: bool
+    task_list_id: Optional[int]
+    task_list_name: Optional[str] = None
+
 
     class Config:
         from_attributes = True
-
 
 class TaskUpdate(BaseModel):
     name: Optional[str] = None
@@ -330,6 +340,11 @@ async def update_user(
     db.commit()
     return {"msg": "User updated successfully"}
 
+@app.get("/users", response_model=List[UserResponse])
+async def get_all_users(db: Session = Depends(get_db)):
+    users = db.query(UserModel.id, UserModel.email, UserModel.name).all()
+    return [UserResponse(**user._asdict()) for user in users]
+
 #Этот маршрут принимает файл и сохраняет его в директорию avatars
 @app.post("/users/me/avatar", response_model=dict)
 async def upload_avatar(
@@ -438,25 +453,89 @@ async def delete_tasklist(task_list_id: int, db: Session = Depends(get_db), toke
 @app.post("/tasks", response_model=TaskResponse)
 async def create_task(task: TaskCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     current_user_id = get_current_user_id(token, db)
+
+    # Проверка существования TaskList, если task_list_id указан
+    if task.task_list_id:
+        task_list = db.query(TaskList).filter(
+            TaskList.id == task.task_list_id, TaskList.user_id == current_user_id
+        ).first()
+        if not task_list:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail="TaskList not found or does not belong to the user"
+            )
+
+    # Создание новой задачи
     new_task = Task(
         name=task.name,
         end_date=task.end_date,
         description=task.description,
-        assigned=task.assigned,
-        author=current_user_id,
+        assigned=",".join(map(str, task.assigned)) if task.assigned else None,  # Преобразуем список в строку
+        author_id=current_user_id,
         notification=task.notification,
+        is_completed=False,  # Указываем значение по умолчанию
+        task_list_id=task.task_list_id,
     )
     db.add(new_task)
     db.commit()
     db.refresh(new_task)
-    return new_task
 
+    # Возвращаем корректный результат
+    return TaskResponse(
+        id=new_task.id,
+        name=new_task.name,
+        end_date=new_task.end_date,
+        description=new_task.description,
+        assigned=list(map(int, new_task.assigned.split(","))) if new_task.assigned else [],
+        author=new_task.author_id,  # Здесь используем author_id, а не объект UserModel
+        notification=new_task.notification,
+        is_completed=new_task.is_completed,
+        task_list_id=new_task.task_list_id,
+    )
 
 @app.get("/tasks/author", response_model=List[TaskResponse])
 async def get_author_tasks(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     current_user_id = get_current_user_id(token, db)
-    tasks = db.query(Task).filter(Task.author == current_user_id).all()
-    return tasks
+
+    # Запрос задач с именем TaskList
+    tasks = (
+        db.query(
+            Task.id,
+            Task.name,
+            Task.end_date,
+            Task.description,
+            Task.assigned,
+            Task.author_id.label("author"),
+            Task.notification,
+            Task.is_completed,
+            Task.task_list_id,
+            TaskList.name.label("task_list_name")  # Имя TaskList
+        )
+        .join(TaskList, Task.task_list_id == TaskList.id, isouter=True)
+        .filter(Task.author_id == current_user_id)
+        .all()
+    )
+    formatted_tasks = []
+    for task in tasks:
+        assigned = (
+            list(map(int, task.assigned.split(","))) if task.assigned else []
+        )  # Преобразуем строку в список
+        formatted_tasks.append(
+            TaskResponse(
+                id=task.id,
+                name=task.name,
+                end_date=task.end_date,
+                description=task.description,
+                assigned=assigned,
+                author=task.author,
+                notification=task.notification,
+                is_completed=task.is_completed,
+                task_list_id=task.task_list_id,
+                task_list_name=task.task_list_name,
+            )
+        )
+
+    return formatted_tasks
 
 
 @app.get("/tasks/assigned", response_model=List[TaskResponse])
