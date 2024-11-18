@@ -197,7 +197,6 @@ export const getUsersTasks = async (token: string | undefined) => {
         const response = await api.get('/tasks/author', {
             headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);
@@ -213,14 +212,6 @@ export const createNewTask = async (
     task_list_id: number
 ) => {
     try {
-        console.log(
-            token,
-            name,
-            end_date,
-            description,
-            notification,
-            task_list_id
-        );
         const response = await api.post(
             '/tasks',
             {
@@ -242,5 +233,20 @@ export const createNewTask = async (
     } catch (error) {
         console.error('Upload failed:', error);
         throw new Error('Upload failed');
+    }
+};
+
+export const deleteTask = async (
+    token: string | undefined,
+    task_id: number | undefined
+) => {
+    try {
+        const response = await api.delete(`/tasks/${task_id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Delete failed:', error);
+        throw new Error('Delete failed');
     }
 };

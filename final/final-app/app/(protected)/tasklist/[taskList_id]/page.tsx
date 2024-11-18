@@ -3,7 +3,7 @@
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { getUsersTasks, getUserTaskLists } from '../../../lib/api';
 import {
     setModalCurrentContent,
@@ -36,6 +36,7 @@ export type Task = {
 
 const TaskList = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const params = useParams();
     const taskList_id = params.taskList_id;
 
@@ -80,6 +81,13 @@ const TaskList = () => {
                 <ControlButton onClick={addNewTaskButtonClickHandler}>
                     Добавить событие
                 </ControlButton>
+                <br />
+                <button
+                    className={styles.smallButton}
+                    onClick={() => router.push('/dashboard')}
+                >
+                    Назад
+                </button>
             </div>
             <Calendar usersTasks={currentTasks} />
             <Modal cookieValue={token} />

@@ -7,6 +7,7 @@ import { TaskListModalContent } from '../ModalContent/TaskListModalContent/TaskL
 import { CreateNewTaskModalContent } from '../ModalContent/CreateNewTaskModalContent/CreateNewTaskModalContent';
 import type { RootState } from '../../../store/store';
 import styles from './Modal.module.css';
+import { TaskDetailsModalContent } from '../ModalContent/TaskDetailsModalContent/TaskDetailsModalContent';
 
 export type ModalProps = {
     cookieValue?: string;
@@ -15,6 +16,7 @@ export type ModalProps = {
 export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
     const dispatch = useDispatch();
     const modal = useSelector((state: RootState) => state.modal);
+    const events = useSelector((state: RootState) => state.events);
 
     const renderContent = () => {
         switch (modal.modalCurrentContent) {
@@ -39,6 +41,13 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
             case 'contentAddNewTask':
                 return <CreateNewTaskModalContent cookieValue={cookieValue} />;
 
+            case 'contentTaskDetails':
+                return (
+                    <TaskDetailsModalContent
+                        task={events.currentTask}
+                        cookieValue={cookieValue}
+                    />
+                );
             default:
                 return null;
         }

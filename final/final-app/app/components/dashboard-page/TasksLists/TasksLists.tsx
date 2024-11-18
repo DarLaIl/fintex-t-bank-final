@@ -112,6 +112,3 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
         </div>
     );
 };
-function currentTaskListId(): any {
-    throw new Error('Function not implemented.');
-}

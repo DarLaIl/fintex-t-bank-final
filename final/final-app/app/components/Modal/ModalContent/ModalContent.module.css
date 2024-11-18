@@ -78,8 +78,28 @@
     font-size: 14px;
 }
 
+.editButton {
+    background-color: #45a049;
+    color: #000;
+}
+
+.deleteButton {
+    background-color: #eb0909;
+    color: #000;
+}
+
 @media (hover: hover) {
     .fileLabel:hover {
         background-color: #45a049;
+    }
+
+    .editButton:hover {
+        background-color: #0e5212;
+        color: #fff;
+    }
+
+    .deleteButton:hover {
+        background-color: #5c0404;
+        color: #fff;
     }
 }

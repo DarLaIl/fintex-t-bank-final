@@ -3,3 +3,12 @@
     display: flex;
     gap: 15px;
 }
+
+.smallButton {
+    padding: 5px;
+    color: #d0e1ba;
+    cursor: pointer;
+    background-color: #069f58;
+    border-radius: 10px;
+    margin-top: 20px;
+}

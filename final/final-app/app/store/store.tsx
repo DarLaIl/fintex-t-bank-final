@@ -2,6 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import type { AnyAction } from 'redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { Task } from '@/(protected)/tasklist/[taskList_id]/page';
 
 interface AuthState {
     token: string | null;
@@ -16,6 +17,7 @@ interface ModalState {
 
 interface eventsState {
     isAdded: boolean;
+    currentTask: Task | null;
 }
 
 const initialAuthState: AuthState = {
@@ -31,6 +33,7 @@ const initialModalState: ModalState = {
 
 const initialEventState: eventsState = {
     isAdded: false,
+    currentTask: null,
 };
 
 const authSlice = createSlice({
@@ -77,13 +80,16 @@ const EventsSlice = createSlice({
         setIsAdded: (state) => {
             state.isAdded = !state.isAdded;
         },
+        setCurrentTask(state, action: PayloadAction<Task | null>) {
+            state.currentTask = action.payload;
+        },
     },
 });
 
 export const { setToken, setUser } = authSlice.actions;
 export const { setModalActive, setModalCurrentContent, setCurrentTaskListId } =
     ModalSlice.actions;
-export const { setIsAdded } = EventsSlice.actions;
+export const { setIsAdded, setCurrentTask } = EventsSlice.actions;
 
 export const makeStore = () =>
     configureStore({

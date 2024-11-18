@@ -13,24 +13,16 @@ const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
                 decodedToken.exp && decodedToken.exp * 1000 < Date.now();
 
             if (isExpired) {
-                clearAuthToken();
-                redirect('/login');
+                cookieStore.delete(token);
             }
             return <>{children}</>;
-            
         } catch (err) {
             console.error('Invalid token:', err);
-            clearAuthToken();
             redirect('/login');
         }
-
     } else {
         redirect('/login');
     }
 };
-
-function clearAuthToken() {
-    document.cookie = 'auth_token=; Max-Age=0; path=/;';
-}
 
 export default ProtectedLayout;
