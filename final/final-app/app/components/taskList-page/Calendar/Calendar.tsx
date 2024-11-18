@@ -1,12 +1,26 @@
-'use client';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import styles from './Calendar.module.css';
-import { useState } from 'react';
+import type { Task } from '@/(protected)/tasklist/[taskList_id]/page';
 
-export default function Calendar() {
-    const [events, setEvents] = useState([]);
+type CalendarProps = {
+    usersTasks: Task[];
+};
+type Event = {
+    title: string;
+    start: string;
+    end?: string;
+    allDay?: boolean;
+};
+
+export default function Calendar({ usersTasks }: CalendarProps) {
+    const events: Event[] = usersTasks.map((usersTask) => ({
+        title: usersTask.name,
+        start: `${usersTask.end_date}T00:00:00`,
+        end: `${usersTask.end_date}T23:59:59`,
+    }));
+
     return (
         <div className={styles.calendarContainer}>
             <FullCalendar
@@ -14,12 +28,13 @@ export default function Calendar() {
                 selectable
                 events={events}
                 headerToolbar={{
-                    start: 'today prev next',
+                    left: 'today prev next',
                     center: 'title',
-                    end: 'dayGridMonth dayGridWeek dayGridDay',
+                    right: 'dayGridMonth,dayGridWeek,dayGridDay',
                 }}
                 plugins={[dayGridPlugin, interactionPlugin]}
-                views={['dayGridMonth', 'dayGridWeek', 'dayGridDay']}
+                //views={['dayGridMonth', 'dayGridWeek', 'dayGridDay']}
+                initialView='dayGridMonth'
                 height={'90vh'}
                 locale={'ru'}
                 buttonText={{
@@ -29,6 +44,7 @@ export default function Calendar() {
                     month: 'месяц',
                 }}
                 firstDay={1}
+                displayEventTime={false}
             />
         </div>
     );

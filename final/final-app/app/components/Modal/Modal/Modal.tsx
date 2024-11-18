@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setModalActive } from '../../../store/store';
 import { ChangeUserInfoModalContent } from '../ModalContent/ChangeUserInfoModalContent/ChangeUserInfoModalContent';
 import { TaskListModalContent } from '../ModalContent/TaskListModalContent/TaskListModalContent';
+import { CreateNewTaskModalContent } from '../ModalContent/CreateNewTaskModalContent/CreateNewTaskModalContent';
 import type { RootState } from '../../../store/store';
 import styles from './Modal.module.css';
 
@@ -16,7 +17,7 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
     const modal = useSelector((state: RootState) => state.modal);
 
     const renderContent = () => {
-        switch (modal.currentContent) {
+        switch (modal.modalCurrentContent) {
             case 'contentUpdateUser':
                 return <ChangeUserInfoModalContent cookieValue={cookieValue} />;
             case 'contentAddNewTaskList':
@@ -35,6 +36,9 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
                         update
                     />
                 );
+            case 'contentAddNewTask':
+                return <CreateNewTaskModalContent cookieValue={cookieValue} />;
+
             default:
                 return null;
         }

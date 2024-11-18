@@ -38,7 +38,7 @@ export const logout = async () => {
     Cookies.remove('jwt');
 };
 
-export const getUserProfile = async (token: string) => {
+export const getUserProfile = async (token: string | undefined) => {
     try {
         const response = await api.get('/users/me', {
             headers: { Authorization: `Bearer ${token}` },
@@ -102,7 +102,7 @@ export const uploadUserAvatar = async (
     }
 };
 
-export const getUserTaskLists = async (token: string) => {
+export const getUserTaskLists = async (token: string | undefined) => {
     try {
         const response = await api.get('/tasklists', {
             headers: { Authorization: `Bearer ${token}` },
@@ -192,4 +192,55 @@ export const getHolidays = async () => {
     }
 };
 
+export const getUsersTasks = async (token: string | undefined) => {
+    try {
+        const response = await api.get('/tasks/author', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
+};
 
+export const createNewTask = async (
+    token: string | undefined,
+    name: string,
+    end_date: string,
+    description: string,
+    notification: boolean,
+    task_list_id: number
+) => {
+    try {
+        console.log(
+            token,
+            name,
+            end_date,
+            description,
+            notification,
+            task_list_id
+        );
+        const response = await api.post(
+            '/tasks',
+            {
+                name: `${name}`,
+                end_date: `${end_date}`,
+                description: `${description}`,
+                assigned: [],
+                notification: `${notification}`,
+                task_list_id: `${task_list_id}`,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'content-type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Upload failed:', error);
+        throw new Error('Upload failed');
+    }
+};

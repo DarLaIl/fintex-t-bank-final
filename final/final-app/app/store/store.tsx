@@ -10,8 +10,12 @@ interface AuthState {
 
 interface ModalState {
     isActive: boolean;
-    currentContent: string | null;
+    modalCurrentContent: string | null;
     currentTaskListId: number;
+}
+
+interface eventsState {
+    isAdded: boolean;
 }
 
 const initialAuthState: AuthState = {
@@ -21,8 +25,12 @@ const initialAuthState: AuthState = {
 
 const initialModalState: ModalState = {
     isActive: false,
-    currentContent: null,
+    modalCurrentContent: null,
     currentTaskListId: 0,
+};
+
+const initialEventState: eventsState = {
+    isAdded: false,
 };
 
 const authSlice = createSlice({
@@ -53,8 +61,8 @@ const ModalSlice = createSlice({
         setModalActive(state, action: PayloadAction<boolean>) {
             state.isActive = action.payload;
         },
-        setCurrentContent(state, action: PayloadAction<string | null>) {
-            state.currentContent = action.payload;
+        setModalCurrentContent(state, action: PayloadAction<string | null>) {
+            state.modalCurrentContent = action.payload;
         },
         setCurrentTaskListId(state, action: PayloadAction<number>) {
             state.currentTaskListId = action.payload;
@@ -62,15 +70,27 @@ const ModalSlice = createSlice({
     },
 });
 
+const EventsSlice = createSlice({
+    name: 'events',
+    initialState: initialEventState,
+    reducers: {
+        setIsAdded: (state) => {
+            state.isAdded = !state.isAdded;
+        },
+    },
+});
+
 export const { setToken, setUser } = authSlice.actions;
-export const { setModalActive, setCurrentContent, setCurrentTaskListId } =
+export const { setModalActive, setModalCurrentContent, setCurrentTaskListId } =
     ModalSlice.actions;
+export const { setIsAdded } = EventsSlice.actions;
 
 export const makeStore = () =>
     configureStore({
         reducer: {
             auth: authSlice.reducer,
             modal: ModalSlice.reducer,
+            events: EventsSlice.reducer,
         },
     });
 

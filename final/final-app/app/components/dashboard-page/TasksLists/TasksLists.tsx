@@ -11,16 +11,16 @@ import {
 import { FaPencilAlt } from 'react-icons/fa';
 import { ControlButton } from '../../buttons/ControlButton/ControlButton';
 import {
-    setCurrentContent,
+    setModalCurrentContent,
     setModalActive,
     setCurrentTaskListId,
 } from '../../../store/store';
 import { deleteTaskList } from '../../../lib/api';
 import styles from './TaskLists.module.css';
 
-type TaskListsProps = {
+export type TaskListsProps = {
     lists: { id: number; name: string; type: string }[];
-    cookieValue: string | undefined;
+    cookieValue?: string;
 };
 
 export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
@@ -29,11 +29,12 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
 
     const addNewListButtonClickHandler = () => {
         dispatch(setModalActive(true));
-        dispatch(setCurrentContent('contentAddNewTaskList'));
+        dispatch(setModalCurrentContent('contentAddNewTaskList'));
     };
+
     const updateListButtonClickHandler = (listId: number) => {
         dispatch(setModalActive(true));
-        dispatch(setCurrentContent('contentUpdateTaskList'));
+        dispatch(setModalCurrentContent('contentUpdateTaskList'));
         dispatch(setCurrentTaskListId(listId));
     };
 
@@ -47,6 +48,12 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
             console.error('Delete failed:', err);
         }
     };
+
+    const goToTaskList = (listId: number) => {
+        dispatch(setCurrentTaskListId(listId));
+        router.push(`/tasklist/${listId}`);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -91,9 +98,7 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
                                 </button>
                                 <button
                                     className={styles.details}
-                                    onClick={() =>
-                                        router.push(`/tasklist/${list.id}`)
-                                    }
+                                    onClick={() => goToTaskList(list.id)}
                                 >
                                     Подробнее
                                 </button>
