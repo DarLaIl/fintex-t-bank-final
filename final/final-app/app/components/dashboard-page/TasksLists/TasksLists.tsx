@@ -26,7 +26,7 @@ export type TaskListsProps = {
 export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
     const dispatch = useDispatch();
     const router = useRouter();
-
+    
     const addNewListButtonClickHandler = () => {
         dispatch(setModalActive(true));
         dispatch(setModalCurrentContent('contentAddNewTaskList'));

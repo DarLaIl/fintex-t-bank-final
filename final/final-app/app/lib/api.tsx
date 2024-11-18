@@ -38,6 +38,18 @@ export const logout = async () => {
     Cookies.remove('jwt');
 };
 
+export const getAllUser = async (token: string | undefined) => {
+    try {
+        const response = await api.get('/users', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+    }
+};
+
 export const getUserProfile = async (token: string | undefined) => {
     try {
         const response = await api.get('/users/me', {
@@ -203,12 +215,24 @@ export const getUsersTasks = async (token: string | undefined) => {
     }
 };
 
+export const getAssignedTasks = async (token: string | undefined) => {
+    try {
+        const response = await api.get('/tasks/assigned', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
+};
+
 export const createNewTask = async (
     token: string | undefined,
     name: string,
     end_date: string,
     description: string,
     notification: boolean,
+    assigned: number[],
     task_list_id: number
 ) => {
     try {
@@ -218,7 +242,7 @@ export const createNewTask = async (
                 name: `${name}`,
                 end_date: `${end_date}`,
                 description: `${description}`,
-                assigned: [],
+                assigned: assigned,
                 notification: `${notification}`,
                 task_list_id: `${task_list_id}`,
             },
@@ -226,6 +250,38 @@ export const createNewTask = async (
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'content-type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Upload failed:', error);
+        throw new Error('Upload failed');
+    }
+};
+
+export const updateTask = async (
+    token: string | undefined,
+    name: string,
+    end_date: string,
+    description: string,
+    notification: boolean,
+    assigned: number[],
+    task_id: number | undefined
+) => {
+    try {
+        const response = await api.put(
+            `/tasks/${task_id}`,
+            {
+                name: `${name}`,
+                end_date: `${end_date}`,
+                description: `${description}`,
+                assigned: assigned,
+                notification: `${notification}`,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 },
             }
         );

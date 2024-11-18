@@ -183,6 +183,7 @@ class TaskUpdate(BaseModel):
     description: Optional[str] = None
     notification: Optional[bool] = None
     iscompleted: Optional[bool] = None
+    assigned: Optional[List[int]] = None
 
 
 # Comment схемы
@@ -541,29 +542,117 @@ async def get_author_tasks(db: Session = Depends(get_db), token: str = Depends(o
 @app.get("/tasks/assigned", response_model=List[TaskResponse])
 async def get_assigned_tasks(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     current_user_id = get_current_user_id(token, db)
-    tasks = db.query(Task).filter(Task.assigned.contains([current_user_id])).all()
-    return tasks
+    
+    # Запрос задач, назначенных текущему пользователю
+    tasks = (
+        db.query(
+            Task.id,
+            Task.name,
+            Task.end_date,
+            Task.description,
+            Task.assigned,
+            Task.author_id.label("author"),
+            Task.notification,
+            Task.is_completed,
+            Task.task_list_id,
+            TaskList.name.label("task_list_name")  # Имя TaskList
+        )
+        .join(TaskList, Task.task_list_id == TaskList.id, isouter=True)
+        .filter(Task.assigned != None)  # Отфильтровать только задачи с назначенными пользователями
+        .all()
+    )
+    
+    # Отбор задач, назначенных текущему пользователю
+    assigned_tasks = [
+        task for task in tasks if str(current_user_id) in (task.assigned.split(",") if task.assigned else [])
+    ]
+    
+    # Преобразование результата в нужный формат
+    formatted_tasks = []
+    for task in assigned_tasks:
+        assigned = (
+            list(map(int, task.assigned.split(","))) if task.assigned else []
+        )  # Преобразуем строку в список
+        formatted_tasks.append(
+            TaskResponse(
+                id=task.id,
+                name=task.name,
+                end_date=task.end_date,
+                description=task.description,
+                assigned=assigned,
+                author=task.author,
+                notification=task.notification,
+                is_completed=task.is_completed,
+                task_list_id=task.task_list_id,
+                task_list_name=task.task_list_name,
+            )
+        )
+
+    return formatted_tasks
 
 
 @app.put("/tasks/{task_id}", response_model=TaskResponse)
 async def update_task(
     task_id: int, updates: TaskUpdate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
 ):
+    # Получение ID текущего пользователя
     current_user_id = get_current_user_id(token, db)
-    task = db.query(Task).filter(Task.id == task_id, Task.author == current_user_id).first()
+
+    # Поиск задачи, принадлежащей текущему пользователю
+    task = (
+        db.query(Task)
+        .filter(Task.id == task_id, Task.author_id == current_user_id)
+        .first()
+    )
+
+    # Если задача не найдена, возвращаем ошибку
     if not task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
-    for key, value in updates.dict(exclude_unset=True).items():
-        setattr(task, key, value)
+
+    # Обновление полей задачи
+    updates_data = updates.dict(exclude_unset=True)
+    
+    # Специальная обработка для assigned
+    if "assigned" in updates_data:
+        assigned_value = updates_data["assigned"]
+        if isinstance(assigned_value, list):
+            task.assigned = ",".join(map(str, assigned_value))  # Преобразуем список в строку для хранения
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Assigned must be a list of integers",
+            )
+
+    # Обновление остальных полей
+    for key, value in updates_data.items():
+        if key != "assigned":  # Пропускаем, так как обработали выше
+            setattr(task, key, value)
+
+    # Сохранение изменений
     db.commit()
     db.refresh(task)
-    return task
 
+    # Преобразование assigned в список для возврата
+    assigned_list = [int(a) for a in task.assigned.split(",")] if task.assigned else []
+
+    # Возвращаем корректные данные
+    return TaskResponse(
+        id=task.id,
+        name=task.name,
+        end_date=task.end_date,
+        description=task.description,
+        assigned=assigned_list,  # Возвращаем список
+        author=task.author_id,  # Возвращаем ID автора
+        notification=task.notification,
+        is_completed=task.is_completed,
+        task_list_id=task.task_list_id,
+        task_list_name=task.task_list.name if task.task_list else None,
+    )
 
 @app.delete("/tasks/{task_id}", response_model=dict)
 async def delete_task(task_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     current_user_id = get_current_user_id(token, db)
-    task = db.query(Task).filter(Task.id == task_id, Task.author == current_user_id).first()
+    task = db.query(Task).filter(Task.id == task_id, Task.author_id == current_user_id).first()
     if not task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
     db.query(Comments).filter(Comments.task_id == task_id).delete()

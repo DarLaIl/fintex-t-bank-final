@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { redirect, useParams, usePathname, useRouter } from 'next/navigation';
-import { setIsAdded, setModalActive } from '../../../../store/store';
-import { createNewTask, deleteTask } from '../../../../lib/api';
-import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
-import type { ModalProps } from '../../Modal/Modal';
+import {
+    setCurrentTask,
+    setIsAdded,
+    setModalActive,
+    setModalCurrentContent,
+} from '../../../../store/store';
+import { deleteTask, getAllUser, getUserProfile } from '../../../../lib/api';
 import styles from '../ModalContent.module.css';
 import { Task } from '@/(protected)/tasklist/[taskList_id]/page';
 
@@ -12,20 +14,51 @@ type TaskProps = {
     cookieValue?: string;
     task: Task | null;
 };
+
+type User = {
+    id: number;
+    email: string;
+    name: string;
+};
 export const TaskDetailsModalContent: React.FC<TaskProps> = ({
     cookieValue,
     task,
 }) => {
     const dispatch = useDispatch();
+    const [allUsers, setAllUsers] = useState<User[]>([]);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-    console.log(task?.id);
-    const deleteTaskButtonClickHandler = async (task_id) => {
+    useEffect(() => {
+        const fetchAllUsers = async () => {
+            try {
+                const allUsers = await getAllUser(cookieValue);
+                const currentUser = await getUserProfile(cookieValue);
+                setAllUsers(allUsers);
+                setCurrentUser(currentUser);
+            } catch (err) {
+                console.error('Error fetching users:', err);
+            }
+        };
+        fetchAllUsers();
+    }, []);
+    const isAuthor = task?.author === currentUser?.id;
+
+    const updateTaskButtonClickHandler = (task: Task | null) => {
+        dispatch(setCurrentTask(task));
+        dispatch(setModalActive(true));
+        dispatch(setModalCurrentContent('contentUpdateTask'));
+    };
+
+    const deleteTaskButtonClickHandler = async (
+        task_id: number | undefined
+    ) => {
         try {
             await deleteTask(cookieValue, task_id);
         } catch (err) {
             console.error('Update failed:', err);
         } finally {
             dispatch(setModalActive(false));
+            dispatch(setIsAdded());
         }
     };
 
@@ -43,19 +76,37 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
                     <strong>Дата завершения:</strong> {task?.end_date}
                 </p>
                 <p>
+                    <strong>Добавленные пользователи:</strong>
+                </p>
+                <ul>
+                    {allUsers.length > 0 &&
+                        allUsers.map((user) => (
+                            <li key={user?.id}>
+                                {user?.name}({user?.email})
+                            </li>
+                        ))}
+                </ul>
+                <p>
                     <strong>Напоминание:</strong>
                     {task?.notification ? 'Да' : 'Нет'}
                 </p>
             </div>
-            <div>
-                <button className={styles.editButton}>Изменить</button>
-                <button
-                    className={styles.deleteButton}
-                    onClick={() => deleteTaskButtonClickHandler(task?.id)}
-                >
-                    Удалить
-                </button>
-            </div>
+            {isAuthor && (
+                <div>
+                    <button
+                        className={styles.editButton}
+                        onClick={() => updateTaskButtonClickHandler(task)}
+                    >
+                        Изменить
+                    </button>
+                    <button
+                        className={styles.deleteButton}
+                        onClick={() => deleteTaskButtonClickHandler(task?.id)}
+                    >
+                        Удалить
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

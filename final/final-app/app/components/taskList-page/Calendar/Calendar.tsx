@@ -102,10 +102,19 @@ export default function Calendar({ usersTasks }: CalendarProps) {
                             filteredTasks.map((task, index) => (
                                 <div key={index} className={styles.taskItem}>
                                     <h4>Название: {task.name}</h4>
-                                    <p>Описание: {task.description}</p>
-                                    <p>Дата дедлайна: {task.end_date}</p>
                                     <p>
-                                        Нужно напоминать о дедлайне,{' '}
+                                        <strong>Описание</strong>:{' '}
+                                        {task.description}
+                                    </p>
+                                    <p>
+                                        <strong>Дата дедлайна</strong>:{' '}
+                                        {task.end_date}
+                                    </p>
+                                    <p>
+                                        <strong>
+                                            Нужно напоминать о дедлайне
+                                        </strong>
+                                        :{' '}
                                         {task.notification
                                             ? 'Напоминать'
                                             : 'Не напоминать'}

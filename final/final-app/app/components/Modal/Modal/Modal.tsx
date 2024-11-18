@@ -39,7 +39,20 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
                     />
                 );
             case 'contentAddNewTask':
-                return <CreateNewTaskModalContent cookieValue={cookieValue} />;
+                return (
+                    <CreateNewTaskModalContent
+                        cookieValue={cookieValue}
+                        update={false}
+                    />
+                );
+
+            case 'contentUpdateTask':
+                return (
+                    <CreateNewTaskModalContent
+                        cookieValue={cookieValue}
+                        update
+                    />
+                );
 
             case 'contentTaskDetails':
                 return (
@@ -48,6 +61,7 @@ export const Modal: React.FC<ModalProps> = ({ cookieValue }) => {
                         cookieValue={cookieValue}
                     />
                 );
+
             default:
                 return null;
         }
