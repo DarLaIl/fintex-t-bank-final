@@ -13,7 +13,7 @@ export const Avatar: React.FC<AvatarProps> = ({ user, cookieValue }) => {
                 const avatar = await getUserAvatar(cookieValue);
                 if (avatar) {
                     setAvatarSrc(avatar);
-                }
+                } 
             } catch (err) {
                 console.error('Fetching failed:', err);
             }

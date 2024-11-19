@@ -9,8 +9,7 @@ export const HolidaysToday: React.FC<HolidaysTodayProps> = ({ holidays }) => {
                 <ul>
                     {holidays.map((holiday, index) => (
                         <li key={index}>
-                            <strong>{holiday.name}</strong> -
-                            {holiday.description}
+                            <b>{holiday.name}</b> -{holiday.description}
                         </li>
                     ))}
                 </ul>

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import {
     getAssignedTasks,
     getHolidays,
+    getTasksToday,
     getUserProfile,
     getUserTaskLists,
 } from '../../lib/api';
@@ -13,6 +14,7 @@ import { TaskLists } from '../../components/dashboard-page/TasksLists/TasksLists
 import { SharedTasks } from '../../components/dashboard-page/SharedTasks/SharedTasks';
 import { HolidaysToday } from '../../components/dashboard-page/HolidaysToday/HolidaysToday';
 import { Modal } from '../../components/Modal/Modal/Modal';
+import { Notification } from '../../components/dashboard-page/Notification/Notification'
 import styles from './Dashboard.module.css';
 
 const Dashboard = async () => {
@@ -25,13 +27,17 @@ const Dashboard = async () => {
             const taskListsPromise = getUserTaskLists(token);
             const assignedPromise = getAssignedTasks(token);
             const holidaysPromise = getHolidays();
-            const [user, taskLists, holidaysToday, assignedTasks] =
-                await Promise.all([
-                    userPromise,
-                    taskListsPromise,
-                    holidaysPromise,
-                    assignedPromise,
-                ]);
+            const [
+                user,
+                taskLists,
+                holidaysToday,
+                assignedTasks,
+            ] = await Promise.all([
+                userPromise,
+                taskListsPromise,
+                holidaysPromise,
+                assignedPromise,
+            ]);
 
             return (
                 <div className={styles.profilePage}>
@@ -47,6 +53,7 @@ const Dashboard = async () => {
                         <SharedTasks tasks={assignedTasks} />
                         <HolidaysToday holidays={holidaysToday} />
                     </div>
+                    <Notification cookieValue={token} />
                     <Modal cookieValue={token} />
                 </div>
             );

@@ -25,15 +25,15 @@ export const SharedTasks: React.FC<SharedTasksProps> = ({ tasks }) => {
                     {tasks.map((task) => (
                         <li key={task?.id}>
                             <p>
-                                <strong>Название:</strong>
+                                <b>Название:</b>
                                 {task.name}
                             </p>
                             <p>
-                                <strong>Дата окончания:</strong>
+                                <b>Дата окончания:</b>
                                 {task.end_date}
                             </p>
                             <p>
-                                <strong>Описание:</strong> {task.description}
+                                <b>Описание:</b> {task.description}
                             </p>
                             <button
                                 className={styles.smallButton}
