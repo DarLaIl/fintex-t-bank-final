@@ -1,9 +1,12 @@
 'use client';
 
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { register } from '../../lib/api';
+import { login, register } from '../../lib/api';
 import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../store/store';
 
 export default function RegistrationForm() {
     const [name, setName] = useState<string>('');
@@ -13,14 +16,23 @@ export default function RegistrationForm() {
     const [error, setError] = useState<string>('');
 
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const registerButtonClickHandler = async () => {
         try {
             await register(email, password, name, lastname);
-            router.push('/login');
+            const token: string | undefined = await login(email, password);
+            if (token) {
+                dispatch(setToken(token));
+                router.push('/dashboard');
+            }
         } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Неизвестная ошибка.');
+            }
             console.error('Registration failed:', err);
-            setError('Registration failed. Please try again.');
         }
     };
 

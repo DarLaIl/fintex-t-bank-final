@@ -2,6 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import type { AnyAction } from 'redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import type { Task } from '../types/types';
 
 interface AuthState {
     token: string | null;
@@ -10,7 +11,13 @@ interface AuthState {
 
 interface ModalState {
     isActive: boolean;
-    currentContent: string | null;
+    modalCurrentContent: string | null;
+    currentTaskListId: number;
+}
+
+interface EventsState {
+    isAdded: boolean;
+    currentTask: Task | null;
 }
 
 const initialAuthState: AuthState = {
@@ -20,7 +27,13 @@ const initialAuthState: AuthState = {
 
 const initialModalState: ModalState = {
     isActive: false,
-    currentContent: null,
+    modalCurrentContent: null,
+    currentTaskListId: 0,
+};
+
+const initialEventState: EventsState = {
+    isAdded: false,
+    currentTask: null,
 };
 
 const authSlice = createSlice({
@@ -51,20 +64,39 @@ const ModalSlice = createSlice({
         setModalActive(state, action: PayloadAction<boolean>) {
             state.isActive = action.payload;
         },
-        setCurrentContent(state, action: PayloadAction<string | null>) {
-            state.currentContent = action.payload;
+        setModalCurrentContent(state, action: PayloadAction<string | null>) {
+            state.modalCurrentContent = action.payload;
+        },
+        setCurrentTaskListId(state, action: PayloadAction<number>) {
+            state.currentTaskListId = action.payload;
+        },
+    },
+});
+
+const EventsSlice = createSlice({
+    name: 'events',
+    initialState: initialEventState,
+    reducers: {
+        setIsAdded: (state) => {
+            state.isAdded = !state.isAdded;
+        },
+        setCurrentTask(state, action: PayloadAction<Task | null>) {
+            state.currentTask = action.payload;
         },
     },
 });
 
 export const { setToken, setUser } = authSlice.actions;
-export const { setModalActive, setCurrentContent } = ModalSlice.actions;
+export const { setModalActive, setModalCurrentContent, setCurrentTaskListId } =
+    ModalSlice.actions;
+export const { setIsAdded, setCurrentTask } = EventsSlice.actions;
 
 export const makeStore = () =>
     configureStore({
         reducer: {
             auth: authSlice.reducer,
             modal: ModalSlice.reducer,
+            events: EventsSlice.reducer,
         },
     });
 

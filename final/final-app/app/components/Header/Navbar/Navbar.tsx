@@ -1,16 +1,17 @@
 'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { logout } from '../../../lib/api';
-import { setToken } from '@/store/store';
 import { LogoutButton } from '../../buttons/LogoutButton/LogoutButton';
 import styles from './Navbar.module.css';
+import { useDispatch } from 'react-redux';
+import { setToken } from '@/store/store';
 
 const Navbar = () => {
     const router = useRouter();
     const pathname = usePathname();
+    const dispatch = useDispatch();
 
     const startButtonClickHandler = () => {
         router.push('/login');
@@ -21,12 +22,21 @@ const Navbar = () => {
     const logoutButtonClickHandler = async () => {
         try {
             await logout();
-            setToken('');
+            router.push('/login');
+            dispatch(setToken(''));
         } catch (err) {
             console.error('Logout failed:', err);
         }
-        router.push('/login');
     };
+
+    const shouldShowLogoutButton = !(
+        pathname === '/login' ||
+        pathname === '/registration' ||
+        pathname === '/'
+    );
+
+    const shouldShowReturnButton =
+        pathname === '/login' || pathname === '/registration';
 
     return (
         <nav className={styles.nav}>
@@ -46,16 +56,12 @@ const Navbar = () => {
                     Начать планировать
                 </LogoutButton>
             )}
-            {(pathname === '/login' || pathname === '/registration') && (
+            {shouldShowReturnButton && (
                 <LogoutButton onClick={returnButtonClickHandler}>
                     Назад
                 </LogoutButton>
             )}
-            {!(
-                pathname === '/login' ||
-                pathname === '/registration' ||
-                pathname === '/'
-            ) && (
+            {shouldShowLogoutButton && (
                 <LogoutButton onClick={logoutButtonClickHandler}>
                     Выйти
                 </LogoutButton>

@@ -1,17 +1,16 @@
 import { Header } from './components/Header/Header';
 import { ReduxProvider } from './providers/ReduxProvider';
+import type { LayoutProps } from './types/types';
 import '../styles/globals.css';
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: LayoutProps) {
     return (
         <html lang="ru">
             <body>
-                <Header />
-                <ReduxProvider>{children}</ReduxProvider>
+                <ReduxProvider>
+                    <Header />
+                    {children}
+                </ReduxProvider>
             </body>
         </html>
     );

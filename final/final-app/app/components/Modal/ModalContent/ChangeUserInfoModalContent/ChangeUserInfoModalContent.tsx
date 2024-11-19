@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { setModalActive } from '../../../../store/store';
 import { updateUserProfile, uploadUserAvatar } from '../../../../lib/api';
 import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
-import type { ModalProps } from '../Modal/Modal';
-import styles from './ChangeUserInfoModalContent.module.css';
+import styles from '../ModalContent.module.css';
+import type { СookieProps } from '../../../../types/types';
 
-export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
+export const ChangeUserInfoModalContent: React.FC<СookieProps> = ({
     cookieValue,
 }) => {
     const [name, setName] = useState<string>('');
@@ -29,8 +29,8 @@ export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
             await uploadUserAvatar(cookieValue, formData);
             setAvatar(null);
         } catch (err) {
-            console.error('Registration failed:', err);
-            setError('Registration failed. Please try again.');
+            console.error('Update failed:', err);
+            setError('Update failed. Please try again.');
         } finally {
             setName('');
             setLastname('');
@@ -54,6 +54,7 @@ export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
             <h4>Изменить данные профиля:</h4>
             {error && <p>{error}</p>}
             <input
+                className={styles.inputText}
                 placeholder="Имя"
                 type="text"
                 id="userFirstName"
@@ -61,13 +62,26 @@ export const ChangeUserInfoModalContent: React.FC<ModalProps> = ({
                 onChange={(e) => setName(e.target.value)}
             />
             <input
+                className={styles.inputText}
                 placeholder="Фамилия"
                 type="text"
                 id="userLastName"
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
             />
-            <input type="file" onChange={handleFileChangeHandler} />
+            <div>
+                <span>Установите аватар:</span>
+                <label className={styles.fileLabel}>
+                    <span className={styles.fileLabelText}>
+                        {avatar?.name || 'Выберите файл'}
+                    </span>
+                    <input
+                        type="file"
+                        onChange={handleFileChangeHandler}
+                        className={styles.inputFile}
+                    />
+                </label>
+            </div>
             <ControlButton onClick={updateUserButtonClickHandler}>
                 Сохранить
             </ControlButton>

@@ -1,29 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { setToken } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { type RootState, setToken } from '../../store/store';
 import { login } from '../../lib/api';
 import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
 
-export default function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+const LoginForm = () => {
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const router = useRouter();
     const dispatch = useDispatch();
 
+    const user = useSelector((state: RootState) => state.auth);
+
+    useEffect(() => {
+        if (user.token) {
+            router.push('/dashboard');
+        }
+    }, []);
+
     const loginButtonClickHandler = async () => {
         try {
-            const token = await login(email, password);
+            const token: string | undefined = await login(email, password);
             if (token) {
                 dispatch(setToken(token));
                 router.push('/dashboard');
             }
         } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message); 
+            } else {
+                setError('Неизвестная ошибка.'); 
+            }
             console.error('Login failed:', err);
-            setError('Login failed. Please check your credentials.');
         }
     };
 
@@ -31,7 +44,7 @@ export default function LoginForm() {
         <AuthWrapper
             error={error}
             onClick={loginButtonClickHandler}
-            buttonText={'Войти'}
+            buttonText="Войти"
         >
             <input
                 placeholder="Email"
@@ -49,4 +62,5 @@ export default function LoginForm() {
             />
         </AuthWrapper>
     );
-}
+};
+export default LoginForm;

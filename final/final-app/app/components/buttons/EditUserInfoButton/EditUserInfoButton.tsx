@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { setCurrentContent, setModalActive } from '../../../store/store';
+import { setModalCurrentContent, setModalActive } from '../../../store/store';
 import styles from './EditUserInfoButton.module.css';
 
 export const EditUserInfoButton = () => {
@@ -10,7 +10,7 @@ export const EditUserInfoButton = () => {
 
     const updateUserProfileButtonClick = () => {
         dispatch(setModalActive(true));
-        dispatch(setCurrentContent('contentUpdateUser'));
+        dispatch(setModalCurrentContent('contentUpdateUser'));
     };
     return (
         <button

@@ -1,15 +1,8 @@
 'use client';
-
 import SwitchBar from '../SwitchBar/SwitchBar';
-import styles from './AuthWrapper.module.css';
 import { ControlButton } from '../../buttons/ControlButton/ControlButton';
-
-type AuthWrapperProps = {
-    error: string;
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    children: React.ReactNode;
-    buttonText: string;
-};
+import styles from './AuthWrapper.module.css';
+import type { AuthWrapperProps } from '../../../types/types';
 
 export const AuthWrapper: React.FC<AuthWrapperProps> = ({
     error,

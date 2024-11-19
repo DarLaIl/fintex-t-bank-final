@@ -40,6 +40,20 @@ a {
     text-decoration: none;
 }
 
+.fc .fc-button {
+    font-size: 0.75em;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.25em;
+}
+
+.fc .fc-view-harness {
+    flex-grow: 1;
+    position: relative;
+    background-color: #fff;
+}
+
 @media only screen and (width < 300px) {
     body {
         background-image: url('../public/wallpaper-300.webp');
@@ -52,7 +66,7 @@ a {
     }
 }
 
-@media only screen and (width > 1200px) and (resolution >= 2dppx) {
+@media only screen and (width > 1200px) {
     body {
         background-image: url('../public/wallpaper-2400.webp');
     }

@@ -1,15 +1,17 @@
-type HolidaysTodayProps = {
-    holidays: string[];
-};
+import styles from './HolidaysToday.module.css';
+import type { HolidaysTodayProps } from '../../../types/types';
 
 export const HolidaysToday: React.FC<HolidaysTodayProps> = ({ holidays }) => {
     return (
-        <div>
+        <div className={styles.container}>
             <h4>Праздники сегодня:</h4>
             {holidays.length > 0 ? (
                 <ul>
                     {holidays.map((holiday, index) => (
-                        <li key={index}>{holiday}</li>
+                        <li key={index}>
+                            <strong>{holiday.name}</strong> -
+                            {holiday.description}
+                        </li>
                     ))}
                 </ul>
             ) : (
