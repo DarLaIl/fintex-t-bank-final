@@ -2,7 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://130.193.45.10:8000',
+    //baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
 });
 
 const HolidaysData = {
@@ -326,5 +327,68 @@ export const deleteTask = async (
     } catch (error) {
         console.error('Delete failed:', error);
         throw new Error('Delete failed');
+    }
+};
+
+export const createNewComment = async (
+    token: string | undefined,
+    task_id: number | undefined,
+    text: string
+) => {
+    try {
+        const response = await api.post(
+            `/comments/${task_id}`,
+            { text },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'content-type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Upload failed:', error);
+        throw new Error('Upload failed');
+    }
+};
+
+export const getEventComments = async (
+    token: string | undefined,
+    task_id: number | undefined
+) => {
+    try {
+        const response = await api.get(`/comments/${task_id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
+};
+
+export const deleteComment = async (
+    token: string | undefined,
+    commentId: number | undefined
+) => {
+    try {
+        const response = await api.delete(`/comments/${commentId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Delete failed:', error);
+        throw new Error('Delete failed');
+    }
+};
+
+export const getTasksToday = async (token: string | undefined) => {
+    try {
+        const response = await api.get(`/tasks/today`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
     }
 };

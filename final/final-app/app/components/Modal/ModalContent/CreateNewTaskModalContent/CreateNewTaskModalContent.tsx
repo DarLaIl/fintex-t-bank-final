@@ -64,6 +64,11 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
             console.error('Update failed:', err);
         } finally {
             dispatch(setModalActive(false));
+            dispatch(setModalActive(false));
+            setName('');
+            setDescription('');
+            setEndDate('');
+            setNotification(false);
         }
     };
 
@@ -83,6 +88,10 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
             console.error('Update failed:', err);
         } finally {
             dispatch(setModalActive(false));
+            setName('');
+            setDescription('');
+            setEndDate('');
+            setNotification(false);
         }
     };
 

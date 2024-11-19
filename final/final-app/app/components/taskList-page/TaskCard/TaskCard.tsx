@@ -18,21 +18,21 @@ export const TaskCard: React.FC<TaskCardProps> = ({ filteredTasks }) => {
     return (
         <>
             {filteredTasks.map((task, index) => (
-                <div key={index} className={styles.taskItem}>
+                <div key={task.id} className={styles.taskItem}>
                     <h4>Название: {task.name}</h4>
                     <p>
-                        <strong>Описание</strong>: {task.description}
+                        <b>Описание</b>: {task.description}
                     </p>
                     <p>
-                        <strong>Дата дедлайна</strong>: {task.end_date}
+                        <b>Дата дедлайна</b>: {task.end_date}
                     </p>
                     <p>
-                        <strong>Нужно напоминать о дедлайне</strong>:{' '}
+                        <b>Нужно напоминать о дедлайне</b>:{' '}
                         {task.notification ? 'Напоминать' : 'Не напоминать'}
                     </p>
                     <button
                         className={styles.smallButton}
-                        onClick={(task) => checkDetailButtonClickHandler}
+                        onClick={() => checkDetailButtonClickHandler(task)}
                     >
                         Подробнее
                     </button>

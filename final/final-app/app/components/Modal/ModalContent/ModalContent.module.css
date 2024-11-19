@@ -1,4 +1,5 @@
 .contentContainer {
+    overflow: scroll;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -6,6 +7,10 @@
     padding: 10px;
     background-color: #ece9e9b5;
     font-size: 17px;
+}
+
+.contentContainer p {
+    margin: 5px;
 }
 
 .inputText {
@@ -88,14 +93,29 @@
     font-size: 14px;
 }
 
+.buttonsContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .editButton {
+    width: 100px;
+    padding: 15px;
+    margin: 10px;
     background-color: #45a049;
     color: #000;
+    border: none;
+    border-radius: 20px;
 }
 
 .deleteButton {
+    width: 100px;
+    padding: 15px;
+    margin: 10px;
     background-color: #eb0909;
     color: #000;
+    border: none;
+    border-radius: 20px;
 }
 
 @media (hover: hover) {

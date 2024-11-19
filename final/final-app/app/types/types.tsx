@@ -23,6 +23,12 @@ export type Task = {
     task_list_name: string;
 };
 
+export type Comment = {
+    id: number;
+    author: number; 
+    text: string;
+};
+
 export type TaskList = {
     id: number;
     name: string;
@@ -108,4 +114,8 @@ export type TaskCardProps = {
 
 export type CalendarProps = {
     usersTasks: Task[];
+};
+
+export type CommentsProps = СookieProps & {
+    eventId: number | undefined;
 };

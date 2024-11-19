@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FullCalendar from '@fullcalendar/react';
+import DateSelectArg from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {
@@ -14,8 +15,8 @@ import type { Task, Event, CalendarProps } from '../../../types/types';
 
 export default function Calendar({ usersTasks }: CalendarProps) {
     const dispatch = useDispatch();
-    const [selectedDate, setSelectedDate] = useState<string>(
-        new Date().toISOString().split('T')[0]
+    const [selectedDate, setSelectedDate] = useState<string>(() =>
+        new Date().toLocaleDateString('en-CA')
     );
     const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
@@ -30,7 +31,7 @@ export default function Calendar({ usersTasks }: CalendarProps) {
             (task) => task.end_date === selectedDate
         );
         setFilteredTasks(tasksForDate);
-    }, [selectedDate, usersTasks]);
+    }, [usersTasks]);
 
     const dateClickHandler = (info: any) => {
         console.log(info);
@@ -38,6 +39,7 @@ export default function Calendar({ usersTasks }: CalendarProps) {
     };
 
     const eventClickHandler = (info: any) => {
+        console.log(info);
         const task = usersTasks.find(
             (task) =>
                 task.name === info.event.title &&

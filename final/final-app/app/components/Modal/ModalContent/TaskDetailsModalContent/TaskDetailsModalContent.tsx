@@ -9,6 +9,7 @@ import {
 import { deleteTask, getAllUser, getUserProfile } from '../../../../lib/api';
 import styles from '../ModalContent.module.css';
 import type { User, Task, TaskProps } from '../../../../types/types';
+import { Comments } from '@/components/taskList-page/Comments/Comments';
 
 export const TaskDetailsModalContent: React.FC<TaskProps> = ({
     cookieValue,
@@ -33,6 +34,9 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
     }, []);
 
     const isAuthor = task?.author === currentUser?.id;
+    const assignedUsers = allUsers.filter((user) =>
+        task?.assigned.includes(user.id)
+    );
 
     const updateTaskButtonClickHandler = (task: Task | null) => {
         dispatch(setCurrentTask(task));
@@ -55,36 +59,37 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
 
     return (
         <div className={styles.contentContainer}>
-            <div>
-                <h4>Информация о событии {task?.name}</h4>
-                <p>
-                    <strong>Название:</strong> {task?.name}
-                </p>
-                <p>
-                    <strong>Описание:</strong> {task?.description}
-                </p>
-                <p>
-                    <strong>Дата завершения:</strong> {task?.end_date}
-                </p>
-                <p>
-                    <strong>Добавленные пользователи:</strong>
-                </p>
+            <h3>Информация о событии "{task?.name}"</h3>
+            <p>
+                <b>Название:</b> {task?.name}
+            </p>
+            <p>
+                <b>Описание:</b> {task?.description}
+            </p>
+            <p>
+                <b>Дата завершения:</b> {task?.end_date}
+            </p>
+            <p>
+                <b>Добавленные пользователи:</b>
+            </p>
+            {assignedUsers.length > 0 ? (
                 <ul>
-                    {allUsers
-                        .filter((user) => task?.assigned.includes(user.id))
-                        .map((user) => (
-                            <li key={user?.id}>
-                                {user?.name} ({user?.email})
-                            </li>
-                        ))}
+                    {assignedUsers.map((user) => (
+                        <li key={user?.id}>
+                            {user?.name} ({user?.email})
+                        </li>
+                    ))}
                 </ul>
-                <p>
-                    <strong>Напоминание:</strong>
-                    {task?.notification ? 'Да' : 'Нет'}
-                </p>
-            </div>
+            ) : (
+                <p>Нет добавленных пользователей</p>
+            )}
+            <p>
+                <b>Напоминание:</b>
+                {task?.notification ? 'Да' : 'Нет'}
+            </p>
+            <Comments eventId={task?.id} cookieValue={cookieValue} />
             {isAuthor && (
-                <div>
+                <div className={styles.buttonsContainer}>
                     <button
                         className={styles.editButton}
                         onClick={() => updateTaskButtonClickHandler(task)}
