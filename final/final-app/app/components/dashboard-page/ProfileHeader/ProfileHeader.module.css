@@ -1,0 +1,8 @@
+.userInfoHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userInfoHeaderTitle {
+    margin-right: 15px;
+}

@@ -1,0 +1,35 @@
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ece9e9;
+    padding: 5px;
+    border-radius: 30px;
+}
+
+.switchBtn {
+    width: 150px;
+    padding: 15px;
+    cursor: pointer;
+    color: #919291;
+    background-color: transparent;
+    border: none;
+    border-radius: 25px;
+}
+
+.switchBtn[data-is-active='true'] {
+    width: 150px;
+    padding: 15px;
+    cursor: pointer;
+    color: #0d4129;
+    background-color: #c8cdac;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.5s ease;
+}
+
+@media (hover: hover) {
+    .switchBtn:hover {
+        background-color: #c8cdac3b;
+        color: #0d4129;
+    }
+}

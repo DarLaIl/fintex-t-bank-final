@@ -1,0 +1,36 @@
+{
+    "name": "final-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "format": "prettier --write ."
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^2.3.0",
+        "axios": "^1.7.7",
+        "cookie": "^1.0.1",
+        "js-cookie": "^3.0.5",
+        "next": "15.0.1",
+        "next-redux-wrapper": "^8.1.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-icons": "^5.3.0",
+        "react-redux": "^9.1.2"
+    },
+    "devDependencies": {
+        "@types/js-cookie": "^3.0.6",
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "15.0.1",
+        "prettier": "3.3.3",
+        "stylelint": "^16.10.0",
+        "stylelint-config-standard": "^36.0.1",
+        "typescript": "^5"
+    }
+}

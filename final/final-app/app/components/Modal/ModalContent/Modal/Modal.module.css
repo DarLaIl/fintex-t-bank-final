@@ -1,0 +1,47 @@
+.modal {
+    height: 100vh;
+    width: 100vw;
+    background-color: #00000047;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.modal[data-is-active='true'] {
+    transition: 0.5s;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.modalContent[data-is-active='true'] {
+    transform: scale(1);
+    transition: scale 0.4s;
+}
+
+.modalBtn {
+    align-self: flex-end;
+    border: none;
+    background-color: transparent;
+}
+
+@media (hover: hover) {
+    .modalBtn:hover {
+        scale: 1.5;
+        color: #8e0000;
+    }
+}

@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    align-items: self-start;
+    flex-direction: column;
+}
+
+.wrapperTitle {
+    margin: 0;
+}
+
+.wrapperText {
+    width: 65%;
+    text-shadow: 1px 1px 2px #fff;
+}
+
+.wrapperFeaturesTitle {
+    margin: 10px;
+}
+
+.wrapperFeaturesList {
+    width: 50%;
+    margin: 0;
+}
