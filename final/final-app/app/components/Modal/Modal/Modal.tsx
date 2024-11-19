@@ -8,9 +8,9 @@ import { CreateNewTaskModalContent } from '../ModalContent/CreateNewTaskModalCon
 import styles from './Modal.module.css';
 import { TaskDetailsModalContent } from '../ModalContent/TaskDetailsModalContent/TaskDetailsModalContent';
 import type { RootState } from '../../../store/store';
-import type { cookieProps } from '../../../types/types';
+import type { СookieProps } from '../../../types/types';
 
-export const Modal: React.FC<cookieProps> = ({ cookieValue }) => {
+export const Modal: React.FC<СookieProps> = ({ cookieValue }) => {
     const dispatch = useDispatch();
     const modal = useSelector((state: RootState) => state.modal);
     const events = useSelector((state: RootState) => state.events);
@@ -24,7 +24,7 @@ export const Modal: React.FC<cookieProps> = ({ cookieValue }) => {
                     <TaskListModalContent
                         cookieValue={cookieValue}
                         title={'Добавить новый список:'}
-                        update={false}
+                        shouldUpdate={false}
                     />
                 );
             case 'contentUpdateTaskList':
@@ -32,21 +32,21 @@ export const Modal: React.FC<cookieProps> = ({ cookieValue }) => {
                     <TaskListModalContent
                         cookieValue={cookieValue}
                         title={'Изменить список:'}
-                        update
+                        shouldUpdate
                     />
                 );
             case 'contentAddNewTask':
                 return (
                     <CreateNewTaskModalContent
                         cookieValue={cookieValue}
-                        update={false}
+                        shouldUpdate={false}
                     />
                 );
             case 'contentUpdateTask':
                 return (
                     <CreateNewTaskModalContent
                         cookieValue={cookieValue}
-                        update
+                        shouldUpdate
                     />
                 );
             case 'contentTaskDetails':

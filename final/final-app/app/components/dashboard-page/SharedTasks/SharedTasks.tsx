@@ -5,7 +5,7 @@ import {
     setModalCurrentContent,
 } from '@/store/store';
 import { useDispatch } from 'react-redux';
-import styles from '../../../(protected)/tasklist/[taskList_id]/taskList.module.css';
+import styles from '../../../(protected)/dashboard/Dashboard.module.css';
 import type { Task, SharedTasksProps } from '@/types/types';
 
 export const SharedTasks: React.FC<SharedTasksProps> = ({ tasks }) => {
@@ -18,7 +18,7 @@ export const SharedTasks: React.FC<SharedTasksProps> = ({ tasks }) => {
     };
 
     return (
-        <div>
+        <div className={styles.SharedTasksContainer}>
             <h3>Совместные дела:</h3>
             {tasks.length > 0 ? (
                 <ul>

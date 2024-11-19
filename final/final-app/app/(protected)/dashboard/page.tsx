@@ -34,7 +34,7 @@ const Dashboard = async () => {
                 ]);
 
             return (
-                <main className={styles.profilePage}>
+                <div className={styles.profilePage}>
                     <div className={styles.userInfo}>
                         <ProfileHeader />
                         <div className={styles.userInfoData}>
@@ -48,7 +48,7 @@ const Dashboard = async () => {
                         <HolidaysToday holidays={holidaysToday} />
                     </div>
                     <Modal cookieValue={token} />
-                </main>
+                </div>
             );
         } catch (err) {
             console.error('Error fetching profile:', err);

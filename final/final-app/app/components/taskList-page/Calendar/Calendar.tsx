@@ -1,14 +1,15 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import styles from './Calendar.module.css';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import {
     setCurrentTask,
     setModalActive,
     setModalCurrentContent,
 } from '@/store/store';
+import { TaskCard } from '../TaskCard/TaskCard';
+import styles from './Calendar.module.css';
 import type { Task, Event, CalendarProps } from '../../../types/types';
 
 export default function Calendar({ usersTasks }: CalendarProps) {
@@ -32,20 +33,15 @@ export default function Calendar({ usersTasks }: CalendarProps) {
     }, [selectedDate, usersTasks]);
 
     const dateClickHandler = (info: any) => {
+        console.log(info);
         setSelectedDate(info.dateStr);
     };
 
-    const checkDetailButtonClickHandler = (task: Task) => {
-        dispatch(setCurrentTask(task));
-        dispatch(setModalActive(true));
-        dispatch(setModalCurrentContent('contentTaskDetails'));
-    };
-
-    const eventClickHandler = (event: any) => {
+    const eventClickHandler = (info: any) => {
         const task = usersTasks.find(
             (task) =>
-                task.name === event.title &&
-                task.end_date === event?.end.toISOString().split('T')[0]
+                task.name === info.event.title &&
+                task.end_date === info.event.end.toISOString().split('T')[0]
         );
 
         if (task) {
@@ -80,7 +76,7 @@ export default function Calendar({ usersTasks }: CalendarProps) {
                     displayEventTime={false}
                     dateClick={dateClickHandler}
                     eventClick={(info) => {
-                        eventClickHandler(info.event);
+                        eventClickHandler(info);
                     }}
                 />
             </div>
@@ -88,37 +84,8 @@ export default function Calendar({ usersTasks }: CalendarProps) {
                 {selectedDate && (
                     <>
                         <h3>События на {selectedDate}:</h3>
-                        {filteredTasks.length > 0 ? (
-                            filteredTasks.map((task, index) => (
-                                <div key={index} className={styles.taskItem}>
-                                    <h4>Название: {task.name}</h4>
-                                    <p>
-                                        <strong>Описание</strong>:{' '}
-                                        {task.description}
-                                    </p>
-                                    <p>
-                                        <strong>Дата дедлайна</strong>:{' '}
-                                        {task.end_date}
-                                    </p>
-                                    <p>
-                                        <strong>
-                                            Нужно напоминать о дедлайне
-                                        </strong>
-                                        :{' '}
-                                        {task.notification
-                                            ? 'Напоминать'
-                                            : 'Не напоминать'}
-                                    </p>
-                                    <button
-                                        className={styles.smallButton}
-                                        onClick={() =>
-                                            checkDetailButtonClickHandler(task)
-                                        }
-                                    >
-                                        Подробнее
-                                    </button>
-                                </div>
-                            ))
+                        {filteredTasks ? (
+                            <TaskCard filteredTasks={filteredTasks} />
                         ) : (
                             <p>Нет событий на эту дату.</p>
                         )}

@@ -69,16 +69,19 @@ export const ChangeUserInfoModalContent: React.FC<СookieProps> = ({
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
             />
-            <label className={styles.fileLabel}>
-                <span className={styles.fileLabelText}>
-                    {avatar?.name || 'Выберите файл'}
-                </span>
-                <input
-                    type="file"
-                    onChange={handleFileChangeHandler}
-                    className={styles.inputFile}
-                />
-            </label>
+            <div>
+                <span>Установите аватар:</span>
+                <label className={styles.fileLabel}>
+                    <span className={styles.fileLabelText}>
+                        {avatar?.name || 'Выберите файл'}
+                    </span>
+                    <input
+                        type="file"
+                        onChange={handleFileChangeHandler}
+                        className={styles.inputFile}
+                    />
+                </label>
+            </div>
             <ControlButton onClick={updateUserButtonClickHandler}>
                 Сохранить
             </ControlButton>

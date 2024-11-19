@@ -6,14 +6,19 @@ import {
     setIsAdded,
     setModalActive,
 } from '../../../../store/store';
-import { createNewTask, getAllUser, updateTask } from '../../../../lib/api';
+import {
+    createNewTask,
+    getAllUser,
+    getUserProfile,
+    updateTask,
+} from '../../../../lib/api';
 import { ControlButton } from '../../../buttons/ControlButton/ControlButton';
 import type { User, TaskModalContentProps } from '../../../../types/types';
 import styles from '../ModalContent.module.css';
 
 export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
     cookieValue,
-    update,
+    shouldUpdate,
 }) => {
     const [name, setName] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
@@ -21,9 +26,10 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
     const [assigned, setAssigned] = useState<string[]>([]);
     const [notification, setNotification] = useState<boolean>(false);
     const [allUsers, setAllUsers] = useState<User[]>([]);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
     const params = useParams();
-    const taskList_id = params.taskList_id;
+    const { taskList_id } = params;
     const dispatch = useDispatch();
 
     const events = useSelector((state: RootState) => state.events);
@@ -32,7 +38,9 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
         const fetchAllUsers = async () => {
             try {
                 const allUsers = await getAllUser(cookieValue);
+                const userProfile = await getUserProfile(cookieValue);
                 setAllUsers(allUsers);
+                setCurrentUser(userProfile);
             } catch (err) {
                 console.error('Error fetching users:', err);
             }
@@ -91,7 +99,7 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
 
     return (
         <div className={styles.contentContainer}>
-            <h4>{update ? 'Изменить событие' : 'Добавить событие'}</h4>
+            <h4>{shouldUpdate ? 'Изменить событие' : 'Добавить событие'}</h4>
             <input
                 className={styles.inputText}
                 placeholder="Название"
@@ -108,33 +116,31 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
-            <label>
-                Дата окончания:
-                <br />
-                <input
-                    className={styles.inputText}
-                    type="date"
-                    id="endDate"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                />
-            </label>
+            <span>Дата окончания:</span>
+            <input
+                className={styles.inputText}
+                type="date"
+                id="endDate"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+            />
+            <span>Добавить исполнителя:</span>
             <label className={styles.label}>
-                Добавить исполнителя:
                 <select
                     name="assigned"
                     multiple={true}
                     value={assigned}
                     onChange={assignedChangeHandler}
-                    className={styles.select}
+                    className={styles.selectMulti}
                 >
                     <option value="" disabled>
                         Выберите
                     </option>
-                    {allUsers.length > 0 &&
-                        allUsers.map((user) => (
-                            <option key={user?.id} value={user?.id.toString()}>
-                                {user?.name}({user?.email})
+                    {allUsers
+                        .filter((user) => user.id !== currentUser?.id)
+                        .map((user) => (
+                            <option key={user.id} value={user.id.toString()}>
+                                {user.name} ({user.email})
                             </option>
                         ))}
                 </select>
@@ -148,12 +154,12 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
                     onChange={() => setNotification(!notification)}
                 />
             </label>
-            {!update && (
+            {!shouldUpdate && (
                 <ControlButton onClick={CreateNewTaskButtonClickHandler}>
                     Добавить
                 </ControlButton>
             )}
-            {update && (
+            {shouldUpdate && (
                 <ControlButton onClick={updateTaskButtonClickHandler}>
                     Изменить
                 </ControlButton>

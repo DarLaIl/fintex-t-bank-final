@@ -9,9 +9,9 @@ import { login } from '../../lib/api';
 import { AuthWrapper } from '../../components/auth-page/AuthWrapper/AuthWrapper';
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -31,12 +31,12 @@ const LoginForm = () => {
                 router.push('/dashboard');
             }
         } catch (err) {
-            if (axios.isAxiosError(err)) {
-                setError(err.response?.data?.detail);
+            if (err instanceof Error) {
+                setError(err.message); 
             } else {
-                setError('Неизвестная ошибка.');
+                setError('Неизвестная ошибка.'); 
             }
-            console.error('Registration failed:', err);
+            console.error('Login failed:', err);
         }
     };
 

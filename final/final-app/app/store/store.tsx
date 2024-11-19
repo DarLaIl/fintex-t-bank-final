@@ -15,7 +15,7 @@ interface ModalState {
     currentTaskListId: number;
 }
 
-interface eventsState {
+interface EventsState {
     isAdded: boolean;
     currentTask: Task | null;
 }
@@ -31,7 +31,7 @@ const initialModalState: ModalState = {
     currentTaskListId: 0,
 };
 
-const initialEventState: eventsState = {
+const initialEventState: EventsState = {
     isAdded: false,
     currentTask: null,
 };

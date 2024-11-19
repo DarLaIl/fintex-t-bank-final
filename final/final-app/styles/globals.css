@@ -66,7 +66,7 @@ a {
     }
 }
 
-@media only screen and (width > 1200px) and (resolution >= 2dppx) {
+@media only screen and (width > 1200px) {
     body {
         background-image: url('../public/wallpaper-2400.webp');
     }

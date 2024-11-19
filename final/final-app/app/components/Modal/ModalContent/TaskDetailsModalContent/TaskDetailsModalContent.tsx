@@ -31,6 +31,7 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
         };
         fetchAllUsers();
     }, []);
+
     const isAuthor = task?.author === currentUser?.id;
 
     const updateTaskButtonClickHandler = (task: Task | null) => {
@@ -69,10 +70,11 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
                     <strong>Добавленные пользователи:</strong>
                 </p>
                 <ul>
-                    {allUsers.length > 0 &&
-                        allUsers.map((user) => (
+                    {allUsers
+                        .filter((user) => task?.assigned.includes(user.id))
+                        .map((user) => (
                             <li key={user?.id}>
-                                {user?.name}({user?.email})
+                                {user?.name} ({user?.email})
                             </li>
                         ))}
                 </ul>

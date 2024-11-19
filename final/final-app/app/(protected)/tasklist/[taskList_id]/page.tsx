@@ -60,7 +60,7 @@ const TaskListPage = () => {
     };
     return (
         <div className={styles.taskListPage}>
-            <div>
+            <div className={styles.taskListHeader}>
                 <h2>Список: {currentTaskList?.name}</h2>
                 <ControlButton onClick={addNewTaskButtonClickHandler}>
                     Добавить событие

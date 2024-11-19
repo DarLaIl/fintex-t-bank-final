@@ -7,8 +7,8 @@ const api = axios.create({
 
 const HolidaysData = {
     api: {
-        endpoint: 'https://calendarific.com/api/v2/holidays',
-        key: 'Y4Mj16r8M4r6VdAAhH6VvrZu57HiVTbB',
+        endpoint: process.env.NEXT_PUBLIC_HOLIDAYS_API_ENDPOINT || '',
+        key: process.env.NEXT_PUBLIC_HOLIDAYS_API_KEY || '',
     },
 };
 
@@ -18,20 +18,42 @@ export const register = async (
     name: string,
     lastname: string
 ) => {
-    const response = await api.post('/register', {
-        email,
-        password,
-        name,
-        lastname,
-    });
-    return response.data;
+    try {
+        const response = await api.post('/register', {
+            email,
+            password,
+            name,
+            lastname,
+        });
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const errorMessage =
+                error.response?.data?.detail[0].msg || 'Ошибка регистрации.';
+            console.error('Error register profile:', errorMessage);
+            throw new Error(errorMessage);
+        }
+        console.error('Unknown error during registration:', error);
+        throw new Error('Неизвестная ошибка регистрации.');
+    }
 };
 
 export const login = async (email: string, password: string) => {
-    const response = await api.post('/login', { email, password });
-    const token = response.data.access_token;
-    Cookies.set('jwt', token, { expires: 1 });
-    return token;
+    try {
+        const response = await api.post('/login', { email, password });
+        const token = response.data.access_token;
+        Cookies.set('jwt', token, { expires: 1 });
+        return token;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const errorMessage =
+                error.response?.data?.detail[0].msg || 'Ошибка входа.';
+            console.error('Error login:', errorMessage);
+            throw new Error(errorMessage);
+        }
+        console.error('Unknown error during login:', error);
+        throw new Error('Неизвестная ошибка входа.');
+    }
 };
 
 export const logout = async () => {

@@ -1,4 +1,7 @@
 // Общие типы
+export type LayoutProps = {
+    children: React.ReactNode;
+}
 
 export type User = {
     id: number;
@@ -88,11 +91,19 @@ export type TaskListsProps = СookieProps & {
 };
 
 export type TaskModalContentProps = СookieProps & {
-    update: boolean;
+    shouldUpdate: boolean;
+};
+
+export type TaskListModalContentProps = TaskModalContentProps & {
+    title: string;
 };
 
 export type TaskProps = СookieProps & {
     task: Task | null;
+};
+
+export type TaskCardProps = {
+    filteredTasks: Task[];
 };
 
 export type CalendarProps = {

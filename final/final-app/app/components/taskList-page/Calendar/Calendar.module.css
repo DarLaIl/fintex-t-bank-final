@@ -8,12 +8,14 @@
     --fc-button-active-bg-color: #01b05e;
     --fc-button-hover-bg-color: #01b05e;
     --fc-bg-event-opacity: 0.3;
-    --fc-highlight-color: #01b05e3c;
-    --fc-today-bg-color: #1bed8bb5;
+    --fc-highlight-color: #bbef2d3c;
+    --fc-today-bg-color: #1bed8b30;
 }
 
 .container {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 30px;
 }
 
@@ -50,4 +52,10 @@
     background-color: #069f58;
     border-radius: 10px;
     margin-top: 20px;
+}
+
+@media all and (width< 1000px) {
+    .calendarContainer {
+        width: 90vw;
+    }
 }

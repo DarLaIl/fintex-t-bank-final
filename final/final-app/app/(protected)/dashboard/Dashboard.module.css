@@ -1,6 +1,7 @@
 .profilePage {
+    max-width: 1440px;
     display: flex;
-    align-items: self-start;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -14,9 +15,9 @@
 
 .userTasks {
     box-sizing: border-box;
-    width: 100%;
+    max-width: 1440px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 40px;
 }
@@ -25,3 +26,23 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.smallButton {
+    padding: 5px;
+    color: #d0e1ba;
+    cursor: pointer;
+    background-color: #069f58;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.SharedTasksContainer{
+    width: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px solid #1a7a32;
+}
+

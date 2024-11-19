@@ -58,7 +58,8 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
                     Добавить
                 </ControlButton>
             </div>
-            {lists?.length > 0 ? (
+            {!lists && <p>Здесь пока ничего нет</p>}
+            {lists?.length > 0 && (
                 <ul className={styles.lists}>
                     {lists.map((list) => (
                         <li key={list.id}>
@@ -102,8 +103,6 @@ export const TaskLists: React.FC<TaskListsProps> = ({ lists, cookieValue }) => {
                         </li>
                     ))}
                 </ul>
-            ) : (
-                <p>Здесь пока ничего нет</p>
             )}
         </div>
     );

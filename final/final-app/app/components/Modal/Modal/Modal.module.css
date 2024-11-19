@@ -46,3 +46,21 @@
         color: #8e0000;
     }
 }
+
+@media all and (width<1200px) {
+    .modalContent {
+        width: 40vw;
+    }
+}
+
+@media all and (width<850px) {
+    .modalContent {
+        width: 70vw;
+    }
+}
+
+@media all and (width<850px) {
+    .modalContent {
+        width: 90vw;
+    }
+}

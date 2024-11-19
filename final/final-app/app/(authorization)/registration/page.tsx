@@ -27,8 +27,8 @@ export default function RegistrationForm() {
                 router.push('/dashboard');
             }
         } catch (err) {
-            if (axios.isAxiosError(err)) {
-                setError(err.response?.data?.detail);
+            if (err instanceof Error) {
+                setError(err.message);
             } else {
                 setError('Неизвестная ошибка.');
             }

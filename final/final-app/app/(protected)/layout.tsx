@@ -1,8 +1,9 @@
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import type { LayoutProps } from '@/types/types';
 
-const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
+const ProtectedLayout = async ({ children }: LayoutProps) => {
     const cookieStore = await cookies();
     const token: string | undefined = cookieStore.get('jwt')?.value;
 
