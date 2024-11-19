@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FullCalendar from '@fullcalendar/react';
-import DateSelectArg from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import {
     setCurrentTask,
     setModalActive,
@@ -12,6 +11,7 @@ import {
 import { TaskCard } from '../TaskCard/TaskCard';
 import styles from './Calendar.module.css';
 import type { Task, Event, CalendarProps } from '../../../types/types';
+import { EventClickArg } from 'fullcalendar/index.js';
 
 export default function Calendar({ usersTasks }: CalendarProps) {
     const dispatch = useDispatch();
@@ -33,17 +33,15 @@ export default function Calendar({ usersTasks }: CalendarProps) {
         setFilteredTasks(tasksForDate);
     }, [usersTasks]);
 
-    const dateClickHandler = (info: any) => {
-        console.log(info);
-        setSelectedDate(info.dateStr);
+    const dateClickHandler = (arg: DateClickArg) => {
+        setSelectedDate(arg.dateStr);
     };
 
-    const eventClickHandler = (info: any) => {
-        console.log(info);
+    const eventClickHandler = (arg: EventClickArg) => {
         const task = usersTasks.find(
             (task) =>
-                task.name === info.event.title &&
-                task.end_date === info.event.end.toISOString().split('T')[0]
+                task.name === arg.event.title &&
+                task.end_date === arg.event.end?.toISOString().split('T')[0]
         );
 
         if (task) {

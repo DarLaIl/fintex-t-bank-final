@@ -1,7 +1,7 @@
 // Общие типы
 export type LayoutProps = {
     children: React.ReactNode;
-}
+};
 
 export type User = {
     id: number;
@@ -25,7 +25,7 @@ export type Task = {
 
 export type Comment = {
     id: number;
-    author: number; 
+    author: number;
     text: string;
 };
 
