@@ -1,16 +1,15 @@
 import axios from 'axios';
+import https from 'https';
 import Cookies from 'js-cookie';
+
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+});
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://130.193.45.10:8000',
+    httpsAgent,
 });
-
-const HolidaysData = {
-    api: {
-        endpoint: process.env.NEXT_PUBLIC_HOLIDAYS_API_ENDPOINT || '',
-        key: process.env.NEXT_PUBLIC_HOLIDAYS_API_KEY || '',
-    },
-};
 
 export const register = async (
     email: string,
@@ -205,24 +204,6 @@ export const deleteTaskList = async (
     } catch (error) {
         console.error('Delete failed:', error);
         throw new Error('Delete failed');
-    }
-};
-
-export const getHolidays = async () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    try {
-        const response = await fetch(
-            `${HolidaysData.api.endpoint}?api_key=${HolidaysData.api.key}&country=RU&year=${year}&month=${month}&day=${day}`
-        );
-
-        const data = await response.json();
-
-        return data.response.holidays;
-    } catch (error) {
-        console.error('Fetch failed:', error);
     }
 };
 

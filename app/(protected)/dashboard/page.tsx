@@ -18,42 +18,47 @@ const Dashboard = async () => {
     const cookieStore = await cookies();
     const token: string | undefined = cookieStore.get('jwt')?.value;
 
-    if (token) {
-        try {
-            const userPromise = getUserProfile(token);
-            const taskListsPromise = getUserTaskLists(token);
-            const assignedPromise = getAssignedTasks(token);
-            const [user, taskLists, assignedTasks] =
-                await Promise.all([
-                    userPromise,
-                    taskListsPromise,
-                    assignedPromise,
-                ]);
-
-            return (
-                <div className={styles.profilePage}>
-                    <div className={styles.userInfo}>
-                        <ProfileHeader />
-                        <div className={styles.userInfoData}>
-                            <Avatar user={user} cookieValue={token} />
-                            <UserInfo user={user} />
-                        </div>
-                    </div>
-                    <div className={styles.userTasks}>
-                        <TaskLists lists={taskLists} cookieValue={token} />
-                        <SharedTasks tasks={assignedTasks} />
-                    </div>
-                    <Notification cookieValue={token} />
-                    <Modal cookieValue={token} />
-                </div>
-            );
-        } catch (err) {
-            console.error('Error fetching profile:', err);
-            redirect('/login');
-        }
-    } else {
+    if (!token) {
         redirect('/login');
     }
+
+    let user = null;
+    let taskLists = [];
+    let assignedTasks = [];
+
+    try {
+        const [fetchedUser, fetchedTaskLists, fetchedAssignedTasks] =
+            await Promise.all([
+                getUserProfile(token),
+                getUserTaskLists(token),
+                getAssignedTasks(token),
+            ]);
+
+        user = fetchedUser;
+        taskLists = fetchedTaskLists;
+        assignedTasks = fetchedAssignedTasks;
+    } catch (err) {
+        console.error('Error fetching profile:', err);
+        redirect('/login');
+    }
+
+    return (
+        <div className={styles.profilePage}>
+            <div className={styles.userInfo}>
+                <ProfileHeader />
+                <div className={styles.userInfoData}>
+                    <Avatar user={user} cookieValue={token} />
+                    <UserInfo user={user} />
+                </div>
+            </div>
+            <div className={styles.userTasks}>
+                <TaskLists lists={taskLists} cookieValue={token} />
+                <SharedTasks tasks={assignedTasks} />
+            </div>
+            <Notification cookieValue={token} />
+            <Modal cookieValue={token} />
+        </div>
+    );
 };
 
 export default Dashboard;
