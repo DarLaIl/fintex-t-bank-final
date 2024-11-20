@@ -48,6 +48,14 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
         fetchAllUsers();
     }, [cookieValue]);
 
+    const resetState = () => {
+        dispatch(setModalActive(false));
+        setName('');
+        setDescription('');
+        setEndDate('');
+        setNotification(false);
+    };
+
     const CreateNewTaskButtonClickHandler = async () => {
         try {
             await createNewTask(
@@ -63,12 +71,7 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
         } catch (err) {
             console.error('Update failed:', err);
         } finally {
-            dispatch(setModalActive(false));
-            dispatch(setModalActive(false));
-            setName('');
-            setDescription('');
-            setEndDate('');
-            setNotification(false);
+            resetState();
         }
     };
 
@@ -87,11 +90,7 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
         } catch (err) {
             console.error('Update failed:', err);
         } finally {
-            dispatch(setModalActive(false));
-            setName('');
-            setDescription('');
-            setEndDate('');
-            setNotification(false);
+            resetState();
         }
     };
 

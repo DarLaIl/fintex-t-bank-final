@@ -20,6 +20,14 @@ export const TaskListModalContent: React.FC<TaskListModalContentProps> = ({
     const dispatch = useDispatch();
     const modal = useSelector((state: RootState) => state.modal);
 
+    const resetState = () => {
+        setListName('');
+        setType('');
+        setError('');
+        dispatch(setModalActive(false));
+        router.push('/dashboard');
+    };
+
     const AddNewTaskListButtonClickHandler = async () => {
         try {
             await createNewTaskList(cookieValue, listName, type);
@@ -27,11 +35,7 @@ export const TaskListModalContent: React.FC<TaskListModalContentProps> = ({
             console.error('Upload failed:', err);
             setError('Upload failed. Please try again.');
         } finally {
-            setListName('');
-            setType('');
-            setError('');
-            dispatch(setModalActive(false));
-            router.push('/dashboard');
+            resetState();
         }
     };
     const updateTaskListButtonClickHandler = async () => {
@@ -46,11 +50,7 @@ export const TaskListModalContent: React.FC<TaskListModalContentProps> = ({
             console.error('Upload failed:', err);
             setError('Upload failed. Please try again.');
         } finally {
-            setListName('');
-            setType('');
-            setError('');
-            dispatch(setModalActive(false));
-            router.push('/dashboard');
+            resetState();
         }
     };
 
