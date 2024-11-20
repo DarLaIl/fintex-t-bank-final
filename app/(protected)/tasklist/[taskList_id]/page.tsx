@@ -52,7 +52,7 @@ const TaskListPage = () => {
             }
         };
         fetchTaskLists();
-    }, [taskList_id, isAdded]);
+    }, [token, taskList_id, isAdded]);
 
     const addNewTaskButtonClickHandler = () => {
         dispatch(setModalCurrentContent('contentAddNewTask'));

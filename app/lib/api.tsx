@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://130.193.45.10:8000',
-    //baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
 });
 
 const HolidaysData = {
@@ -384,7 +383,7 @@ export const deleteComment = async (
 
 export const getTasksToday = async (token: string | undefined) => {
     try {
-        const response = await api.get(`/tasks/today`, {
+        const response = await api.get('/tasks/today', {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;

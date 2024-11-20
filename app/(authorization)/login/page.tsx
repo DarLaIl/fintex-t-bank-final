@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +20,7 @@ const LoginForm = () => {
         if (user.token) {
             router.push('/dashboard');
         }
-    }, []);
+    }, [router, user.token]);
 
     const loginButtonClickHandler = async () => {
         try {
@@ -32,9 +31,9 @@ const LoginForm = () => {
             }
         } catch (err) {
             if (err instanceof Error) {
-                setError(err.message); 
+                setError(err.message);
             } else {
-                setError('Неизвестная ошибка.'); 
+                setError('Неизвестная ошибка.');
             }
             console.error('Login failed:', err);
         }

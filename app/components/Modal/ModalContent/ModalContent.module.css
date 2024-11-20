@@ -1,4 +1,5 @@
 .contentContainer {
+    height: 80vh;
     overflow: scroll;
     display: flex;
     flex-direction: column;

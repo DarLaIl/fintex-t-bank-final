@@ -1,0 +1,42 @@
+stages:
+    - install
+    - lint
+    - build
+    - deploy
+
+default:
+    image: node:18
+
+install:
+    stage: install
+    script:
+        - npm install
+    artifacts:
+        paths:
+            - node_modules
+
+lint:
+    stage: lint
+    dependencies:
+        - install-job
+    script:
+        - npm run lint
+        - npm run format --check
+        - npm run stylelint
+
+build:
+    stage: build
+    dependencies:
+        - install-job
+    script:
+        - npm run build
+    artifacts:
+        paths:
+            - 'build/'
+
+deploy:
+    stage: deploy
+    script:
+        - npm install -g vercel
+        - vercel --prod --token $VERCEL_TOKEN
+

@@ -37,7 +37,7 @@ export const Notification: React.FC<СookieProps> = ({ cookieValue }) => {
             }
         };
         fetchTaskDueToday();
-    }, []);
+    }, [cookieValue]);
 
     return (
         <ToastContainer

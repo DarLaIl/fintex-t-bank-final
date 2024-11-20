@@ -46,7 +46,7 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
             }
         };
         fetchAllUsers();
-    }, []);
+    }, [cookieValue]);
 
     const CreateNewTaskButtonClickHandler = async () => {
         try {
@@ -102,7 +102,6 @@ export const CreateNewTaskModalContent: React.FC<TaskModalContentProps> = ({
             event.target.selectedOptions,
             (option) => option.value
         );
-        console.log('Selected users:', values);
         setAssigned(values);
     };
 

@@ -29,7 +29,7 @@ export const Comments: React.FC<CommentsProps> = ({ eventId, cookieValue }) => {
             }
         };
         fetchComments();
-    }, [eventId]);
+    }, [eventId, cookieValue]);
 
     const getAuthorName = (authorId: number): string => {
         const user = allUsers.find((user) => user.id === authorId);
@@ -37,7 +37,9 @@ export const Comments: React.FC<CommentsProps> = ({ eventId, cookieValue }) => {
     };
 
     const handleAddComment = async () => {
-        if (newComment.trim() === '') return;
+        if (newComment.trim() === '') {
+            return;
+        }
 
         try {
             const addedComment = await createNewComment(

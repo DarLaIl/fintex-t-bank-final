@@ -17,7 +17,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ filteredTasks }) => {
     };
     return (
         <>
-            {filteredTasks.map((task, index) => (
+            {filteredTasks.map((task) => (
                 <div key={task.id} className={styles.taskItem}>
                     <h4>Название: {task.name}</h4>
                     <p>

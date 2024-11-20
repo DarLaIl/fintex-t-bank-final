@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "stylelint": "stylelint **/*.css"
     },
     "dependencies": {
         "@fullcalendar/core": "^6.1.15",

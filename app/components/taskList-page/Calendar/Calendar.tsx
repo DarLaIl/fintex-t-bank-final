@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import interactionPlugin from '@fullcalendar/interaction';
+import type { DateClickArg } from '@fullcalendar/interaction';
 import {
     setCurrentTask,
     setModalActive,
@@ -11,7 +12,7 @@ import {
 import { TaskCard } from '../TaskCard/TaskCard';
 import styles from './Calendar.module.css';
 import type { Task, Event, CalendarProps } from '../../../types/types';
-import { EventClickArg } from 'fullcalendar/index.js';
+import type { EventClickArg } from 'fullcalendar/index.js';
 
 export default function Calendar({ usersTasks }: CalendarProps) {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function Calendar({ usersTasks }: CalendarProps) {
             (task) => task.end_date === selectedDate
         );
         setFilteredTasks(tasksForDate);
-    }, [usersTasks]);
+    }, [usersTasks, selectedDate]);
 
     const dateClickHandler = (arg: DateClickArg) => {
         setSelectedDate(arg.dateStr);
