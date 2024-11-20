@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://130.193.45.10:8000',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://130.193.45.10:8000',
 });
 
 const HolidaysData = {
