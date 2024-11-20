@@ -31,9 +31,9 @@ export default function RootLayout({ children }: LayoutProps) {
                 <noscript>
                     <div>
                         <img
-                            src={`https://mc.yandex.ru/watch/98990686`}
+                            src={'https://mc.yandex.ru/watch/98990686'}
                             style={{ position: 'absolute', left: '-9999px' }}
-                            alt=""
+                            alt=''
                         />
                     </div>
                 </noscript>
