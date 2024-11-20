@@ -18,7 +18,7 @@ install:
 lint:
     stage: lint
     dependencies:
-        - install-job
+        - install
     script:
         - npm run lint
         - npm run format --check
@@ -27,16 +27,9 @@ lint:
 build:
     stage: build
     dependencies:
-        - install-job
+        - install
     script:
         - npm run build
     artifacts:
         paths:
             - 'build/'
-
-deploy:
-    stage: deploy
-    script:
-        - npm install -g vercel
-        - vercel --prod --token $VERCEL_TOKEN
-
