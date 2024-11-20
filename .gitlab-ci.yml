@@ -33,3 +33,11 @@ build:
     artifacts:
         paths:
             - 'build/'
+
+deploy:
+    stage: deploy
+    script:
+        - npm install -g vercel
+        - vercel --prod --token d3a4s9hHl6X9F4DAAhVMVn7o
+    only:
+        - master

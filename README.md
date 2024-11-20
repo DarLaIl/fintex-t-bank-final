@@ -2,7 +2,7 @@
 
 **Студент**: Ильина Дарья Дмитриевна
 **Название веб-приложения**: Planify  
-**Ссылка на приложение**: [https://your-domain.ru](https://your-domain.ru)
+**Ссылка на приложение**: [https://fintex-t-bank-final.vercel.app](https://fintex-t-bank-final.vercel.app)
 
 ## Описание проекта
 
