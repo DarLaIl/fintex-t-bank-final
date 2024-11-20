@@ -20,7 +20,6 @@
 }
 
 .modalContent {
-    height: 80vh;
     z-index: 5;
     display: flex;
     flex-direction: column;

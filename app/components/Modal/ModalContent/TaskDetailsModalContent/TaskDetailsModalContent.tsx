@@ -61,16 +61,19 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
         <div className={styles.contentContainer}>
             <h3>Информация о событии</h3>
             <p>
-                <b>Название:</b> {task?.name}
+                <b>Название: </b> {task?.name}
             </p>
             <p>
-                <b>Описание:</b> {task?.description}
+                <b>Автор: </b> {currentUser?.name}
             </p>
             <p>
-                <b>Дата завершения:</b> {task?.end_date}
+                <b>Описание: </b> {task?.description}
             </p>
             <p>
-                <b>Добавленные пользователи:</b>
+                <b>Дата завершения: </b> {task?.end_date}
+            </p>
+            <p>
+                <b>Добавленные пользователи: </b>
             </p>
             {assignedUsers.length > 0 ? (
                 <ul>
@@ -84,7 +87,7 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
                 <p>Нет добавленных пользователей</p>
             )}
             <p>
-                <b>Напоминание:</b>
+                <b>Напоминание: </b>
                 {task?.notification ? 'Да' : 'Нет'}
             </p>
             <Comments eventId={task?.id} cookieValue={cookieValue} />

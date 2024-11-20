@@ -1,6 +1,5 @@
 .contentContainer {
-    height: 80vh;
-    overflow: scroll;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
