@@ -34,6 +34,7 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
     }, [cookieValue]);
 
     const isAuthor = task?.author === currentUser?.id;
+    const taskAuthorName = allUsers.find((user) => user.id === task?.author)?.name;
     const assignedUsers = allUsers.filter((user) =>
         task?.assigned.includes(user.id)
     );
@@ -64,7 +65,7 @@ export const TaskDetailsModalContent: React.FC<TaskProps> = ({
                 <b>Название: </b> {task?.name}
             </p>
             <p>
-                <b>Автор: </b> {currentUser?.name}
+                <b>Автор: </b> {taskAuthorName}
             </p>
             <p>
                 <b>Описание: </b> {task?.description}

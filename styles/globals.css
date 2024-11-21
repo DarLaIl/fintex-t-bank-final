@@ -48,6 +48,10 @@ a {
     font-size: 1.25em;
 }
 
+.fc .fc-toolbar{
+    flex-wrap: wrap;
+}
+
 .fc .fc-view-harness {
     flex-grow: 1;
     position: relative;
@@ -64,6 +68,10 @@ a {
     body {
         background-image: url('../public/wallpaper-600.webp');
     }
+
+    .fc .fc-button {
+    font-size: 0.55em;
+}
 }
 
 @media only screen and (width > 1200px) {

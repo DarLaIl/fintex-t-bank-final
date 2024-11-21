@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 200px;
 }
 
 .formInner textarea {
@@ -29,10 +30,13 @@
 }
 
 .lists li {
+    width: 200px;
+    overflow: auto;
+    word-wrap: break-word;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 20px;
     padding: 8px;
     border-bottom: 1px solid #ddd;
 }

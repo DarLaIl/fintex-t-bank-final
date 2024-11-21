@@ -5,15 +5,27 @@
     flex-direction: column;
 }
 
+.userInfo {
+    max-width: 1440px;
+    padding: 15px;
+}
+
 .userInfoData {
-    width: 100%;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
+.personalData{
+    margin-left: 10px;
+    max-width: 400px;
+    overflow: hidden;
+}
+
 .userTasks {
+    padding: 15px;
     box-sizing: border-box;
     max-width: 1440px;
     display: flex;
@@ -44,4 +56,10 @@
     background-color: #fff;
     border-radius: 20px;
     border: 1px solid #1a7a32;
+}
+
+@media all and (width < 1000) {
+    .userInfo {
+        width: 500px;
+    }
 }
